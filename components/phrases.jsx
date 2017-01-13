@@ -1,5 +1,4 @@
 import React from "react";
-import BingoApi from "./bingo-api.js";
 
 class PhraseInput extends React.Component {
     constructor() {
@@ -32,55 +31,24 @@ class PhraseInput extends React.Component {
 export default class Phrases extends React.Component {
     constructor() {
         super();
-        this.state = {
-            phrases: []
-        };
-        this.onSubmitPhrase = this.onSubmitPhrase.bind(this);
-        this.loadPhrases = this.loadPhrases.bind(this);
-        this.deletePhrases = this.deletePhrases.bind(this);
     }
 
     componentWillMount() {
         console.log("loading phrases in componentWillMount...");
-        this.loadPhrases();
+        this.props.getAll();
     }
 
-    loadPhrases() {
-        var that = this;
-        BingoApi.getPhrases().then(function(phrases) {
-            console.log("loaded phrases:");
-            console.log(phrases);
-            that.setState({ "phrases": phrases });
-        });
-    }
-
-    deletePhrases(event) {
-        event.preventDefault();
-        var that = this;
-        BingoApi.deletePhrases().then(function() {
-            that.loadPhrases();
-        });
-    }
-
-    onSubmitPhrase(phrase) {
-        var that = this;
-        console.log("submitting phrase = " + phrase);
-        BingoApi.postPhrase(phrase).then(function() {
-            console.log("Post phrase succeeded");
-            that.loadPhrases();
-        });
-    }
 
     render() {
         var items = [];
-        for(var i = 0; i < this.state.phrases.length; i++) {
-            items.push(<li className="phrase" key={i}>{ this.state.phrases[i] }</li>);
+        for(var i = 0; i < this.props.phrases.length; i++) {
+            items.push(<li className="phrase" key={i}>{ this.props.phrases[i] }</li>);
         }
         return (<div>
-            <PhraseInput onSubmit={ this.onSubmitPhrase } />
+            <PhraseInput onSubmit={ this.props.post } />
             <h2>Extant Phrases</h2>
             <ol id="phrases-container">{ items }</ol>
-            <button type="button" onClick={ this.deletePhrases }>Delete Everything</button>
+            <button type="button" onClick={ this.props.deleteAll }>Delete Everything</button>
         </div>);
     }
 }
