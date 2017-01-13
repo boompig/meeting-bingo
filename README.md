@@ -16,10 +16,13 @@ Implemented as a web app with Mongo as a backing store.
 
 - node + npm
 - mongo
-- `npm init` + (set to private)
+
+## Compile Instructions
+
+- `npm install` (obviously)
 - `npm install -g webpack`
 - Optional: `npm install -g nodemon`
-- `npm install` (obviously)
+- `webpack`
 
 ## Run Instructions
 
