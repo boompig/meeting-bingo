@@ -12,20 +12,12 @@ Implemented as a web app with Mongo as a backing store.
 - backend: Node + Express
 - store: Mongo
 
-## Vagrant (Setup)
+## Setup
 
-- node + npm
-- mongo
-
-## Compile Instructions
-
-- `npm install` (obviously)
-- `npm install -g webpack`
-- Optional: `npm install -g nodemon`
-- `webpack`
+- `vagrant up`
 
 ## Run Instructions
 
-- start MongoDB: `mongod --dbpath mongo-data` (where you created local directory mongo-data)
-- start server: `npm start`
-
+- start server inside Vagrant box: `npm start`
+- port forwarded @ 8080
+    - from host box navigate to [here](http://localhost:8080)
