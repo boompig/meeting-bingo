@@ -1,7 +1,7 @@
 var $ = require("jquery");
 var BingoApi = {};
 
-BingoApi.baseUrl = "http://localhost:8080/api";
+BingoApi.baseUrl = "/api";
 
 BingoApi.postPhrase = function(phrase) {
     return $.ajax({

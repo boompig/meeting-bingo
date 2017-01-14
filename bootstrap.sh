@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
+if [ $UID -ne 0 ]; then
+	echo "Error: script must be run as root">&1
+	exit 1
+fi
+
 # this is to stop weird warnings by Ubuntu
 export DEBIAN_FRONTEND=noninteractive
 
 # setup
 echo "Installing packages..."
-apt-get update --quiet
-apt-get install --quiet -y nodejs
-apt-get install --quiet -y npm
+apt-get --quiet update
+apt-get --quiet install -y nodejs
+apt-get --quiet install -y npm
 if ! which npm>/dev/null; then
     echo "Error: npm not installed">&2
     exit 1
