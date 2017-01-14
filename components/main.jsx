@@ -13,7 +13,8 @@ export default class MeetingBingo extends React.Component {
         };
         this.getPhrases = this.getPhrases.bind(this);
         this.postPhrase = this.postPhrase.bind(this);
-        this.deletePhrases = this.deletePhrases.bind(this);
+        this.deleteAllPhrases = this.deleteAllPhrases.bind(this);
+        this.deletePhrase = this.deletePhrase.bind(this);
     }
 
     getPhrases() {
@@ -25,9 +26,16 @@ export default class MeetingBingo extends React.Component {
         });
     }
 
-    deletePhrases() {
+	deletePhrase(phraseId) {
         var that = this;
-        BingoApi.deletePhrases().then(function() {
+        BingoApi.deletePhrase(phraseId).then(function() {
+            that.getPhrases();
+        });
+	}
+
+    deleteAllPhrases() {
+        var that = this;
+        BingoApi.deleteAllPhrases().then(function() {
             that.getPhrases();
         });
     }
@@ -48,11 +56,13 @@ export default class MeetingBingo extends React.Component {
         } else {
             grid = null;
         }
-        return (<div>
+        return (<div id="main-wrapper">
+			<h1 className="header">Meeting Bingo</h1>
             { grid }
             <Phrases post={ this.postPhrase }
+				delete={ this.deletePhrase }
                 getAll={ this.getPhrases }
-                deleteAll={ this.deletePhrases }
+                deleteAll={ this.deleteAllPhrases }
                 phrases={ this.state.phrases } />
         </div>);
     }

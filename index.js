@@ -1,6 +1,7 @@
 // imports
 var express = require("express");
 var mongoose = require("mongoose");
+var ObjectId = mongoose.Types.ObjectId;
 var assert = require("assert");
 var bodyParser = require("body-parser");
 
@@ -21,18 +22,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", express.static("public"));
+// work-around
+app.use("/node_modules/bootstrap/dist", express.static("node_modules/bootstrap/dist"));
 
 app.get("/api/phrase/all", function(req, res) {
     var collection = db.collection(mongoCollection);
     console.log("Searching collection '" + mongoCollection + "'...");
     var query = {};
-    var items = collection.find(query, {"phrase": 1, "_id": 0 }).toArray(function(err, items) {
+    collection.find(query, {"phrase": 1, "_id": 1 }).toArray(function(err, items) {
         assert.equal(null, err);
-        var phrases = items.map(function(item) {
-            return item.phrase;
-        });
-        console.log(phrases); 
-        res.json(phrases).end();
+        //console.log(items); 
+        res.json(items).end();
     });
 });
 
@@ -40,6 +40,22 @@ app.delete("/api/phrase/all", function(req, res) {
     console.log("Deleting all phrases...");
     var collection = db.collection(mongoCollection);
     collection.remove({}, function(err) {
+        assert.equal(null, err);
+        res.json({"status": "ok"}).end();
+    });
+});
+
+app.delete("/api/phrase/:phraseId", function(req, res) {
+	if(!req.params.phraseId) {
+		res.status("400").json({ "message": "phraseId is required" }).end();
+		return;
+	}
+    console.log("Deleting phrase with ID " + req.params.phraseId + "...");
+    var collection = db.collection(mongoCollection);
+	var query = {
+		"_id": new ObjectId(req.params.phraseId)
+	};
+    collection.remove(query, function(err) {
         assert.equal(null, err);
         res.json({"status": "ok"}).end();
     });

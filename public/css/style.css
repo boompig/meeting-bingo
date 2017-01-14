@@ -1,4 +1,38 @@
-#bingo-tile-container {
+html, body {
+	font-size: 1em;
+}
+
+h1.header {
+	text-align: center;
+}
+
+#grid-wrapper {
+	margin-bottom: 0.5em;
+	/*margin: 0 auto;*/
+	/*text-align: center;*/
+}
+
+#grid-wrapper button {
+	display: block;
+	margin-bottom: 0.5em;
+}
+
+#main-wrapper {
+	margin: 0 auto;
+	max-width: 800px;
+}
+
+#phrase-form {
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+#phrases-container .remove-phrase-btn {
+	color: tomato;
+}
+
+#phrase-form button {
+	margin-top: 1em;
 }
 
 .bingo-tile {
@@ -6,4 +40,18 @@
     height: 100px;
     border: 1px black solid;
     text-align: center;
+}
+
+@media print {
+	#grid-wrapper button {
+		display: none;
+	}
+
+	#phrases-wrapper {
+		display: none;
+	}
+
+	#phrase-form {
+		display: none;
+	}
 }

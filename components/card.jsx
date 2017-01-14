@@ -14,12 +14,14 @@ class BingoGrid extends React.Component {
         var phrasesSubset = this.randomSubset(this.props.phrases, 24);
         var rows = [];
         // instead of dealing with index complications just insert the Free tile in the middle
-        phrasesSubset.splice(12, 0, "Free");
+        phrasesSubset.splice(12, 0, { "phrase": "Free" });
         for(let i = 0; i < 5; i++) {
             let cells = [];
             for(let j = 0; j < 5; j++) {
-                let contents = phrasesSubset[i * 5 + j];
-                cells.push(<td key={i * 5 + j} className="bingo-tile">{ contents }</td>);
+                let contents = phrasesSubset[i * 5 + j].phrase;
+				cells.push(<td key={i * 5 + j} className="bingo-tile">
+					<span>{ contents }</span>
+				</td>);
             }
             rows.push(<tr key={i}>{ cells }</tr>);
         }
@@ -48,8 +50,9 @@ export default class BingoCard extends React.Component {
             console.log(this.props.phrases);
             grid = <BingoGrid phrases={this.props.phrases} />;
         }
-        return (<div>
-            <button type="button" onClick={this.onClick}>Generate New Grid</button>
+        return (<div id="grid-wrapper">
+			<button className="btn btn-primary" type="button"
+				onClick={this.onClick}>Generate New Grid</button>
             { grid }
         </div>);
     }

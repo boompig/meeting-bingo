@@ -21,9 +21,19 @@ BingoApi.getPhrases = function() {
     });
 };
 
-BingoApi.deletePhrases = function() {
+BingoApi.deleteAllPhrases = function() {
     return $.ajax({
         url: BingoApi.baseUrl + "/phrase/all",
+        dataType: "json",
+        method: "DELETE",
+    }).then(function(response) {
+        return response;
+    });
+};
+
+BingoApi.deletePhrase = function(phraseId) {
+    return $.ajax({
+        url: BingoApi.baseUrl + "/phrase/" + phraseId,
         dataType: "json",
         method: "DELETE",
     }).then(function(response) {

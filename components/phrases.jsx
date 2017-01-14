@@ -20,18 +20,42 @@ class PhraseInput extends React.Component {
     }
 
     render() {
-        return (<form onSubmit={ this.handleSubmit }>
-            <input type="text" placeholder="your new phrase" value={ this.state.newPhrase }
+        return (<form id="phrase-form" role="form" onSubmit={ this.handleSubmit }>
+            <input className="form-control" type="text" placeholder="your new phrase" value={ this.state.newPhrase }
                 onChange={ this.handleChange } />
-            <button type="button" onClick={ this.handleSubmit }>Submit</button>
+			<button className="btn btn-primary form-control" type="button"
+				onClick={ this.handleSubmit }>Submit</button>
         </form>);
     }
+}
+
+class Phrase extends React.Component {
+    constructor() {
+        super();
+        this.confirmDelete = this.confirmDelete.bind(this);
+    }
+
+	confirmDelete(event, phraseId) {
+		event.preventDefault();
+		var userIn = confirm("Are you sure you want to delete phrase '" + this.props.phrase.phrase + "'?");
+		if(userIn) {
+			this.props.delete(phraseId);
+		}
+	}
+
+	render() {
+		return (<li className="phrase" key={ this.props.phrase._id }>
+			<span>{ this.props.phrase.phrase }</span>
+			<span className="glyphicon glyphicon-remove remove-phrase-btn" role="btn"
+				onClick={ (event) => { this.confirmDelete(event, this.props.phrase._id); } }></span>
+		</li>);
+	}
 }
 
 export default class Phrases extends React.Component {
     constructor() {
         super();
-        this.confirmDelete = this.confirmDelete.bind(this);
+        this.confirmDeleteAll = this.confirmDeleteAll.bind(this);
     }
 
     componentWillMount() {
@@ -39,7 +63,7 @@ export default class Phrases extends React.Component {
         this.props.getAll();
     }
 
-    confirmDelete(event) {
+    confirmDeleteAll(event) {
         event.preventDefault();
         var userIn = confirm("Are you sure you want to delete all phrases?");
         if(userIn) {
@@ -50,13 +74,14 @@ export default class Phrases extends React.Component {
     render() {
         var items = [];
         for(var i = 0; i < this.props.phrases.length; i++) {
-            items.push(<li className="phrase" key={i}>{ this.props.phrases[i] }</li>);
+			items.push(<Phrase key={ this.props.phrases[i]._id } delete={ this.props.delete } phrase={ this.props.phrases[i] } />);
         }
-        return (<div>
+        return (<div id="phrases-wrapper">
             <PhraseInput onSubmit={ this.props.post } />
             <h2>Extant Phrases</h2>
             <ol id="phrases-container">{ items }</ol>
-            <button type="button" onClick={ this.confirmDelete }>Delete Everything</button>
+			<button className="btn btn-danger" type="button"
+				onClick={ this.confirmDeleteAll }>Delete Everything</button>
         </div>);
     }
 }
