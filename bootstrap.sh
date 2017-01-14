@@ -23,12 +23,7 @@ apt-get install -y --quiet git
 
 # build
 echo "Building source..."
-if [ ! -d 'meeting-bingo' ]; then 
-    git clone -q 'https://github.com/boompig/meeting-bingo.git'
-else
-    echo "Warning: meeting-bingo already cloned"
-fi
-pushd 'meeting-bingo' >/dev/null
+pushd '/vagrant' >/dev/null
 npm install
 if ! webpack; then
     echo "Error: running webpack failed">&2
@@ -36,7 +31,6 @@ if ! webpack; then
 fi
 # at the end change all the source code to be accessible by the normal user
 popd >/dev/null
-chown -R vagrant:vagrant 'meeting-bingo'
 
 # start the webserver
 # FIXME
