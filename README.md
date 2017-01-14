@@ -21,3 +21,9 @@ Implemented as a web app with Mongo as a backing store.
 - start server inside Vagrant box: `npm start`
 - port forwarded @ 8080
     - from host box navigate to [here](http://localhost:8080)
+
+## Sample Data
+
+- contained in `stock_phrases.yaml`
+- to insert into mongodb run `python tools/yaml_check.py stock_phrases.yaml` from within Vagrant
+    - should set up virtualenv or install requirements as sudo first
