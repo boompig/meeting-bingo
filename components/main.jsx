@@ -25,8 +25,7 @@ export default class MeetingBingo extends React.Component {
         });
     }
 
-    deletePhrases(event) {
-        event.preventDefault();
+    deletePhrases() {
         var that = this;
         BingoApi.deletePhrases().then(function() {
             that.getPhrases();

@@ -23,7 +23,8 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "require": "^2.4.20",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "mongoose": "~4.7.6"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

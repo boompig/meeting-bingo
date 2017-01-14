@@ -31,6 +31,7 @@ class PhraseInput extends React.Component {
 export default class Phrases extends React.Component {
     constructor() {
         super();
+        this.confirmDelete = this.confirmDelete.bind(this);
     }
 
     componentWillMount() {
@@ -38,6 +39,13 @@ export default class Phrases extends React.Component {
         this.props.getAll();
     }
 
+    confirmDelete(event) {
+        event.preventDefault();
+        var userIn = confirm("Are you sure you want to delete all phrases?");
+        if(userIn) {
+            this.props.deleteAll();
+        }
+    }
 
     render() {
         var items = [];
@@ -48,7 +56,7 @@ export default class Phrases extends React.Component {
             <PhraseInput onSubmit={ this.props.post } />
             <h2>Extant Phrases</h2>
             <ol id="phrases-container">{ items }</ol>
-            <button type="button" onClick={ this.props.deleteAll }>Delete Everything</button>
+            <button type="button" onClick={ this.confirmDelete }>Delete Everything</button>
         </div>);
     }
 }

@@ -1,5 +1,11 @@
 mongo-data
 node_modules
 public/js/dist
+
+*.swp
 *.log
 .vagrant
+
+# Python testing
+venv
+

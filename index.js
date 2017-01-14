@@ -1,32 +1,24 @@
 // imports
 var express = require("express");
-var mongodb = require("mongodb");
+var mongoose = require("mongoose");
 var assert = require("assert");
 var bodyParser = require("body-parser");
 
 // global constants
 const appPort = 8080;
 const mongoPort = 27017;
-const mongoUrl = "mongodb://localhost:" + mongoPort;
-const mongoCollection = "phrases";
 const mongoDatabase = "test";
+// the lack of string interpolation support on older versions of Node makes me sad
+const mongoUrl = "mongodb://localhost:" + mongoPort + "/" + mongoDatabase;
+const mongoCollection = "phrases";
 
 var app = express();
+mongoose.connect(mongoUrl);
+var db = mongoose.connection;
 
 // server config
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-var MongoClient = mongodb.MongoClient;
-var db = null;
-var connection = MongoClient.connect(mongoUrl, { db: mongoDatabase }, function(err, returnDb) {
-    if(null !== err) {
-        console.error("Failed to connect to MongoDB")
-    }
-    assert.equal(null, err);
-    console.log("Connected successfully to MongoDB server");
-    db = returnDb;
-});
 
 app.use("/", express.static("public"));
 
