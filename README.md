@@ -8,7 +8,7 @@ When you're in a meeting and a bit bored, amuse yourself by playing bingo. The g
 
 Implemented as a web app with Mongo as a backing store.
 
-- frontend: React + Flexbox
+- frontend: React
 - backend: Node + Express
 - store: Mongo
 

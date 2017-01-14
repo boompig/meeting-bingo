@@ -7,22 +7,23 @@ class BingoGrid extends React.Component {
      */
     randomSubset(arr, size) {
         var shuffled = _.shuffle(arr.slice(0));
-        return arr.slice(0, size);
+        return shuffled.slice(0, size);
     }
 
     render() {
         var phrasesSubset = this.randomSubset(this.props.phrases, 24);
-        var tiles = [];
-        for(let i = 0; i < 25; i++) {
-            if(i === 12) {
-                tiles.push(<div key={i} className="bingo-tile">Free</div>);
-            } else if(i < 12) {
-                tiles.push(<div key={i} className="bingo-tile">{ phrasesSubset[i] }</div>);
-            } else {
-                tiles.push(<div key={i} className="bingo-tile">{ phrasesSubset[i - 1] }</div>);
+        var rows = [];
+        // instead of dealing with index complications just insert the Free tile in the middle
+        phrasesSubset.splice(12, 0, "Free");
+        for(let i = 0; i < 5; i++) {
+            let cells = [];
+            for(let j = 0; j < 5; j++) {
+                let contents = phrasesSubset[i * 5 + j];
+                cells.push(<td key={i * 5 + j} className="bingo-tile">{ contents }</td>);
             }
+            rows.push(<tr key={i}>{ cells }</tr>);
         }
-        return <div id="bingo-tile-container">{ tiles }</div>;
+        return <table id="bingo-tile-container"><tbody>{ rows }</tbody></table>;
     }
 }
 
