@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys
 import yaml
 import json
@@ -11,7 +12,7 @@ def insert_into_mongo(phrases):
     collection = db[collection_name]
     documents = [{"phrase": phrase} for phrase in phrases ]
     collection.insert_many(documents)
-    print "collection %s now has %d documents" % (collection_name, collection.count())
+    print("collection %s now has %d documents" % (collection_name, collection.count()))
 
 
 def yaml_to_json(fname):
