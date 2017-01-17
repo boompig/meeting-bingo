@@ -78,9 +78,9 @@ export default class Phrases extends React.Component {
         }
         return (<div id="phrases-wrapper">
             <PhraseInput onSubmit={ this.props.post } />
-            <h2>Extant Phrases</h2>
+            <h2>Phrases</h2>
             <ol id="phrases-container">{ items }</ol>
-			<button className="btn btn-danger" type="button"
+			<button className="btn btn-danger delete-phrase-btn" type="button"
 				onClick={ this.confirmDeleteAll }>Delete Everything</button>
         </div>);
     }

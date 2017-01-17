@@ -35,6 +35,10 @@ h1.header {
 	margin-top: 1em;
 }
 
+.delete-phrase-btn {
+	margin-left: 1em;
+}
+
 .bingo-tile {
     width: 100px;
     height: 100px;
@@ -42,16 +46,16 @@ h1.header {
     text-align: center;
 }
 
+#show-bingo-card-btn {
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 1em;
+	width: 100%;
+	max-width: 400px;
+}
+
 @media print {
 	#grid-wrapper button {
-		display: none;
-	}
-
-	#phrases-wrapper {
-		display: none;
-	}
-
-	#phrase-form {
 		display: none;
 	}
 }
