@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import _ from "lodash.shuffle";
+import shuffle from "lodash.shuffle";
 import { IPhrase } from "./phrase.js";
 
 interface IBingoGridProps {
@@ -58,7 +58,7 @@ export default class BingoCard extends React.Component<IBingoCardProps, IBingoCa
 	 * Not the most efficient algorithm but it gets the job done
 	 */
 	randomSubset(arr: Array<IPhrase>, size: number) {
-		let shuffled = _.shuffle(arr.slice(0));
+		let shuffled = shuffle(arr.slice(0));
 		return shuffled.slice(0, size);
 	}
 

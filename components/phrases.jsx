@@ -109,7 +109,7 @@ export default class Phrases extends React.Component<IPhrasesProps, {}> {
 
 	confirmDeleteAll(event: window.SyntheticEvent<HTMLElement>) {
 		event.preventDefault();
-		const userIn = confirm("Are you sure you want to delete all phrases?");
+		const userIn = confirm("Are you sure you want to delete all the phrases you added and restore the default phrases?");
 		if(userIn) {
 			this.props.deleteAll();
 		}
@@ -125,7 +125,7 @@ export default class Phrases extends React.Component<IPhrasesProps, {}> {
 			<h2>Phrases</h2>
 			<ol id="phrases-container">{ items }</ol>
 			<button className="btn btn-danger delete-phrase-btn" type="button"
-				onClick={ this.confirmDeleteAll }>Delete Everything</button>
+				onClick={ this.confirmDeleteAll }>Factory Reset</button>
 		</div>);
 	}
 }
