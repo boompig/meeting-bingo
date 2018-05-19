@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import _ from "lodash";
+import _ from "lodash.shuffle";
 import { IPhrase } from "./phrase.js";
 
 interface IBingoGridProps {
