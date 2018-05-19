@@ -1,44 +1,77 @@
-var $ = require("jquery");
-var BingoApi = {};
+// @flow
 
+import "whatwg-fetch";
+
+const BingoApi = {};
 BingoApi.baseUrl = "/api";
 
-BingoApi.postPhrase = function(phrase) {
-    return $.ajax({
-        url: BingoApi.baseUrl + "/phrase",
-        data: { "phrase": phrase },
-        dataType: "json",
-        method: "POST"
-    }).then(function(response) {
-        console.log("response: " + response);
-        return response;
-    });
+const postJSON = (url: string, data: any) => {
+	return fetch(url, {
+		body: JSON.stringify(data),
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		// make sure to forward session
+		credentials: "same-origin",
+	});
 };
 
-BingoApi.getPhrases = function() {
-    return $.get(BingoApi.baseUrl + "/phrase/all", function(response) {
-        return response;
-    });
+const getJSON = (url: string) => {
+	return fetch(url, {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+		// make sure to forward session
+		credentials: "same-origin",
+	});
 };
 
-BingoApi.deleteAllPhrases = function() {
-    return $.ajax({
-        url: BingoApi.baseUrl + "/phrase/all",
-        dataType: "json",
-        method: "DELETE",
-    }).then(function(response) {
-        return response;
-    });
+const deleteJSON = (url: string) => {
+	return fetch(url, {
+		method: "DELETE",
+		headers: { "Content-Type": "application/json" },
+		// make sure to forward session
+		credentials: "same-origin",
+	});
 };
 
-BingoApi.deletePhrase = function(phraseId) {
-    return $.ajax({
-        url: BingoApi.baseUrl + "/phrase/" + phraseId,
-        dataType: "json",
-        method: "DELETE",
-    }).then(function(response) {
-        return response;
-    });
+
+BingoApi.postPhrase = function(phrase: string) {
+	const url = BingoApi.baseUrl + "/phrase";
+	const data = {
+		"phrase": phrase
+	};
+	return postJSON(url, data).then((response) => {
+		if(response.ok) {
+			return response.json();
+		} else {
+			console.error("Failed to post phrase");
+			console.error(response.text());
+		}
+	});
+};
+
+BingoApi.getPhrases = () => {
+	const url = BingoApi.baseUrl + "/phrase/all";
+	return getJSON(url)
+		.then((response) => {
+			console.log(response);
+			return response.json();
+		});
+};
+
+BingoApi.deleteAllPhrases = () => {
+	const url = BingoApi.baseUrl + "/phrase/all";
+	return deleteJSON(url)
+		.then((response) => {
+			return response.json();
+		});
+};
+
+BingoApi.deletePhrase = (phraseId: number) => {
+	const url = BingoApi.baseUrl + "/phrase/" + phraseId;
+	return deleteJSON(url)
+		.then((response) => {
+			return response.json();
+		});
 };
 
 module.exports = BingoApi;

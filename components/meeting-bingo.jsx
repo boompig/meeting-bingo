@@ -1,71 +1,80 @@
+// @flow
+
 import React from "react";
-import ReactDOM from "react-dom";
 
 import BingoApi from "./bingo-api.js";
 import BingoCard from "./card.jsx";
 import Phrases from "./phrases.jsx";
+import { IPhrase } from "./phrase.js";
 
-export default class MeetingBingo extends React.Component {
-    constructor() {
-        super();
-        this.state = {
+interface IProps {}
+
+interface IState {
+	phrases: Array<IPhrase>,
+	renderBingoCard: boolean,
+}
+
+export default class MeetingBingo extends React.Component<IProps, IState> {
+	getPhrases: Function;
+	postPhrase: Function;
+	deleteAllPhrases: Function;
+	deletePhrase: Function;
+	showBingoCard: Function;
+
+	constructor(props: IProps) {
+		super(props);
+		this.state = {
 			phrases: [],
-			showBingoCard: false
-        };
-        this.getPhrases = this.getPhrases.bind(this);
-        this.postPhrase = this.postPhrase.bind(this);
-        this.deleteAllPhrases = this.deleteAllPhrases.bind(this);
-        this.deletePhrase = this.deletePhrase.bind(this);
+			renderBingoCard: false
+		};
+
+		this.getPhrases = this.getPhrases.bind(this);
+		this.postPhrase = this.postPhrase.bind(this);
+		this.deleteAllPhrases = this.deleteAllPhrases.bind(this);
+		this.deletePhrase = this.deletePhrase.bind(this);
 		this.showBingoCard = this.showBingoCard.bind(this);
-    }
-
-    getPhrases() {
-        var that = this;
-        BingoApi.getPhrases().then(function(phrases) {
-            console.log("loaded phrases:");
-            console.log(phrases);
-            that.setState({ "phrases": phrases });
-        });
-    }
-
-	deletePhrase(phraseId) {
-        var that = this;
-        BingoApi.deletePhrase(phraseId).then(function() {
-            that.getPhrases();
-        });
 	}
 
-    deleteAllPhrases() {
-        var that = this;
-        BingoApi.deleteAllPhrases().then(function() {
-            that.getPhrases();
-        });
-    }
+	getPhrases() {
+		console.log("Fetching phrases...");
+		BingoApi.getPhrases().then((phrases) => {
+			console.log("loaded phrases:");
+			console.log(phrases);
+			this.setState({ "phrases": phrases });
+		});
+	}
 
-    postPhrase(phrase) {
-        var that = this;
-        console.log("submitting phrase = " + phrase);
-        BingoApi.postPhrase(phrase).then(function() {
-            console.log("Post phrase succeeded");
-            that.getPhrases();
-        });
-    }
+	deletePhrase(phraseId: number) {
+		BingoApi.deletePhrase(phraseId).then(() => {
+			this.getPhrases();
+		});
+	}
 
-	showBingoCard(show) {
+	deleteAllPhrases() {
+		BingoApi.deleteAllPhrases().then(() => {
+			this.getPhrases();
+		});
+	}
+
+	postPhrase(phrase: string) {
+		console.log("submitting phrase = " + phrase);
+		BingoApi.postPhrase(phrase).then(() => {
+			console.log("Post phrase succeeded");
+			this.getPhrases();
+		});
+	}
+
+	showBingoCard(show: boolean) {
 		this.setState({
 			"renderBingoCard": show
 		});
 	}
 
-    render() {
-        //var grid = null;
-        //if(this.state.phrases.length >= 24) {
-            //grid = <BingoCard phrases={ this.state.phrases } />;
-        //} else {
-            //grid = null;
-        //}
+	render() {
 		if(this.state.renderBingoCard) {
-			return <BingoCard phrases={ this.state.phrases } onBack={ () => this.showBingoCard(false) } />;
+			return <BingoCard
+				phrases={ this.state.phrases }
+				onBack={ () => this.showBingoCard(false) } />;
 		} else {
 			return (<div id="main-wrapper">
 				<h1 className="header">Meeting Bingo</h1>
@@ -84,10 +93,5 @@ export default class MeetingBingo extends React.Component {
 					phrases={ this.state.phrases } />
 			</div>);
 		}
-    }
+	}
 }
-
-ReactDOM.render(
-    <MeetingBingo />,
-    document.getElementById("main-container")
-);

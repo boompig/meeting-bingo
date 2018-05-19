@@ -1,9 +1,10 @@
-var webpack = require("webpack");
-var path = require("path");
+const webpack = require("webpack");
+const path = require("path");
+//const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
     context: __dirname,
-    entry: "./components/main.jsx",
+    entry: "./components/index.js",
     output: {
 		path: "public/js/dist",
         filename: "meeting-bingo.bundle.js"
@@ -20,5 +21,6 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+	//plugins: [new BundleAnalyzerPlugin()],
 };

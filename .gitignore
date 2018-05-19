@@ -9,3 +9,6 @@ public/js/dist
 # Python testing
 venv
 
+# editors
+.vimrc
+

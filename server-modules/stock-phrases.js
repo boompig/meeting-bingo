@@ -1,0 +1,29 @@
+module.exports = {
+	"phrases": [
+		"synergy",
+		"value to customers",
+		"high-impact",
+		"thought leadership",
+		"narrative",
+		"driving innovation",
+		"interface with customers",
+		"data-driven",
+		"fine-grained telemetry",
+		"leverage <some technology>",
+		"quantum leap",
+		"patent portfolio",
+		"bleeding edge",
+		"malicious actors",
+		"threat landscape",
+		"in the cloud",
+		"internet of things",
+		"machine learning",
+		"showcase our ability to...",
+		"big data",
+		"anomaly detection",
+		"nation state / APT",
+		"NoSQL",
+		"data mining"
+	]
+};
+
