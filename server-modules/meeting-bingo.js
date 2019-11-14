@@ -24,7 +24,10 @@ const MeetingBingo = function MeetingBingo() {
 			const phrases = [];
 			for(let id in req.session.bingoPhrases) {
 				if(req.session.bingoPhrases[id] !== null) {
-					phrases.push({ "id": id, "phrase": req.session.bingoPhrases[id] });
+					phrases.push({
+						"id": id,
+						"phrase": req.session.bingoPhrases[id]
+					});
 				}
 			}
 			return res.json(phrases).end();
