@@ -11,4 +11,4 @@ venv
 
 # editors
 .vimrc
-
+*.code-workspace

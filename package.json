@@ -7,7 +7,9 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:server": "yarn run eslint index.js server-modules/*.js",
-    "lint:client": "yarn run eslint components/*.jsx components/phrase.js components/bingo-api.js"
+    "lint:client": "yarn run eslint components/*.jsx components/phrase.js components/bingo-api.js",
+    "build": "yarn webpack",
+    "build:watch": "yarn webpack --watch"
   },
   "author": "",
   "license": "MIT",
