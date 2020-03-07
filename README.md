@@ -6,11 +6,7 @@ When you're in a meeting and a bit bored, amuse yourself by playing bingo. The g
 
 ## Stack
 
-Implemented as a web app with Mongo as a backing store.
-
-- frontend: React
-- backend: Node + Express
-- store: Mongo
+Implemented as a Redux/React webapp.
 
 ## Setup
 
@@ -24,6 +20,4 @@ Implemented as a web app with Mongo as a backing store.
 
 ## Sample Data
 
-- contained in `stock_phrases.yaml`
-- to insert into mongodb run `python tools/yaml_check.py stock_phrases.yaml` from within Vagrant
-    - should set up virtualenv or install requirements as sudo first
+- contained in `public/data/stock-phrases.json`

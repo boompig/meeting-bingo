@@ -2,17 +2,6 @@ import "whatwg-fetch";
 //import { IPhrase } from "./phrase.js";
 
 const BingoApi = {};
-BingoApi.baseUrl = "/api";
-
-const postJSON = (url, data) => {
-	return fetch(url, {
-		body: JSON.stringify(data),
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		// make sure to forward session
-		credentials: "same-origin",
-	});
-};
 
 const getJSON = (url) => {
 	return fetch(url, {
@@ -23,53 +12,21 @@ const getJSON = (url) => {
 	});
 };
 
-const deleteJSON = (url) => {
-	return fetch(url, {
-		method: "DELETE",
-		headers: { "Content-Type": "application/json" },
-		// make sure to forward session
-		credentials: "same-origin",
-	});
-};
-
-
-BingoApi.postPhrase = function(phrase) {
-	const url = BingoApi.baseUrl + "/phrase";
-	const data = {
-		"phrase": phrase
-	};
-	return postJSON(url, data).then((response) => {
-		if(response.ok) {
-			return response.json();
-		} else {
-			console.error("Failed to post phrase");
-			console.error(response.text());
-		}
-	});
-};
-
 BingoApi.getPhrases = function() {
-	const url = BingoApi.baseUrl + "/phrase/all";
+	const url = "./data/stock-phrases.json";
 	return getJSON(url)
 		.then((response) => {
 			console.log(response);
 			return response.json();
-		});
-};
-
-BingoApi.deleteAllPhrases = function() {
-	const url = BingoApi.baseUrl + "/phrase/all";
-	return deleteJSON(url)
-		.then((response) => {
-			return response.json();
-		});
-};
-
-BingoApi.deletePhrase = function(phraseId) {
-	const url = BingoApi.baseUrl + "/phrase/" + phraseId;
-	return deleteJSON(url)
-		.then((response) => {
-			return response.json();
+		})
+		.then((data) => {
+			console.log(data);
+			return data.phrases.map((phrase, i) => {
+				return {
+					"id": i + 1,
+					"phrase": phrase
+				};
+			});
 		});
 };
 
