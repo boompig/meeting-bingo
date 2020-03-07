@@ -1,12 +1,10 @@
-// @flow
-
 import "whatwg-fetch";
 //import { IPhrase } from "./phrase.js";
 
 const BingoApi = {};
 BingoApi.baseUrl = "/api";
 
-const postJSON = (url: string, data: *) => {
+const postJSON = (url, data) => {
 	return fetch(url, {
 		body: JSON.stringify(data),
 		method: "POST",
@@ -16,7 +14,7 @@ const postJSON = (url: string, data: *) => {
 	});
 };
 
-const getJSON = (url: string) => {
+const getJSON = (url) => {
 	return fetch(url, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
@@ -25,7 +23,7 @@ const getJSON = (url: string) => {
 	});
 };
 
-const deleteJSON = (url: string) => {
+const deleteJSON = (url) => {
 	return fetch(url, {
 		method: "DELETE",
 		headers: { "Content-Type": "application/json" },
@@ -35,7 +33,7 @@ const deleteJSON = (url: string) => {
 };
 
 
-BingoApi.postPhrase = function(phrase: string): * {
+BingoApi.postPhrase = function(phrase) {
 	const url = BingoApi.baseUrl + "/phrase";
 	const data = {
 		"phrase": phrase
@@ -50,7 +48,7 @@ BingoApi.postPhrase = function(phrase: string): * {
 	});
 };
 
-BingoApi.getPhrases = function(): * {
+BingoApi.getPhrases = function() {
 	const url = BingoApi.baseUrl + "/phrase/all";
 	return getJSON(url)
 		.then((response) => {
@@ -59,7 +57,7 @@ BingoApi.getPhrases = function(): * {
 		});
 };
 
-BingoApi.deleteAllPhrases = function(): * {
+BingoApi.deleteAllPhrases = function() {
 	const url = BingoApi.baseUrl + "/phrase/all";
 	return deleteJSON(url)
 		.then((response) => {
@@ -67,7 +65,7 @@ BingoApi.deleteAllPhrases = function(): * {
 		});
 };
 
-BingoApi.deletePhrase = function(phraseId: number): * {
+BingoApi.deletePhrase = function(phraseId) {
 	const url = BingoApi.baseUrl + "/phrase/" + phraseId;
 	return deleteJSON(url)
 		.then((response) => {
@@ -75,4 +73,4 @@ BingoApi.deletePhrase = function(phraseId: number): * {
 		});
 };
 
-module.exports = BingoApi;
+export default BingoApi;

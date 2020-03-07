@@ -3,25 +3,32 @@ const path = require("path");
 //const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
-	entry: "./components/index.js",
+	entry: "./src/index",
 
 	output: {
 		path: path.resolve("public/js/dist"),
 		filename: "meeting-bingo.bundle.js"
 	},
 
+	resolve: {
+		extensions: [".js", ".jsx", ".ts", ".tsx"]
+	},
+
+	devtool: "source-map",
+
 	module: {
-		loaders: [
+		rules: [
 			// use babel to convert ES6
 			{
 				test: /\.jsx?$/,
-				loader: "babel-loader",
+				use: {
+					loader: "babel-loader",
+				},
 				exclude: /node_modules/,
-				query: {
-					presets: ["es2015", "react"]
-				}
 			}
 		]
 	},
+
+	mode: "development"
 	//plugins: [new BundleAnalyzerPlugin()],
 };
