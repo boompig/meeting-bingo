@@ -7,8 +7,9 @@
     "start": "echo \"Run your own http server!\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "yarn run eslint src/**/*.jsx src/**/*.js",
-    "build": "yarn webpack",
-    "build:watch": "yarn webpack --watch"
+    "build": "yarn webpack -d",
+    "build:watch": "yarn webpack -d --watch",
+    "build:prod": "yarn webpack -p"
   },
   "author": "",
   "license": "MIT",
@@ -40,8 +41,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn build",
-      "pre-push": "yarn lint && yarn build"
+      "pre-commit": "yarn lint && yarn build:prod",
+      "pre-push": "yarn lint && yarn build:prod"
     }
   }
 }

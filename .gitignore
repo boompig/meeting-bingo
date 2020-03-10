@@ -1,14 +1,9 @@
-mongo-data
 node_modules
-public/js/dist
-
-*.swp
+# javascript
+# public/js/dist
 *.log
-.vagrant
-
-# Python testing
-venv
 
 # editors
 .vimrc
+*.swp
 *.code-workspace
