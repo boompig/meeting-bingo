@@ -15,7 +15,7 @@ Implemented as a Redux/React webapp.
 
 ## Run
 
-Start any HTTP server (ex. `http-server`) then navigate to root
+Start any HTTP server to serve the root directory (ex. `http-server .`) then navigate to root.
 
 ## Sample Data
 

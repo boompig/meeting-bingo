@@ -59,6 +59,8 @@ h1.header, h1.title {
 #phrases-container .remove-phrase-btn {
 	color: tomato;
 	cursor: pointer;
+	font-weight: bold;
+	font-size: 1.1rem;
 }
 
 #phrases-container .phrase-text {
