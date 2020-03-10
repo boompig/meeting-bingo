@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import BingoCard from "./card.jsx";
 import Phrases from "./phrases.jsx";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import  "../css/style.css";
 
 
