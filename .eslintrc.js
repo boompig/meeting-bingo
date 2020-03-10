@@ -17,12 +17,15 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
     ],
     "rules": {
         "indent": [
             "error",
-            "tab"
+            "tab",
+            {
+                "SwitchCase": 1
+            }
         ],
         "linebreak-style": [
             "error",
@@ -39,7 +42,10 @@ module.exports = {
 		"no-console": [
 			"error",
 			{ "allow": ["log", "error"] }
-		]
+        ],
+
+        // for redux
+        "no-case-declarations": 0
     },
 	"settings": {
 		"react": {

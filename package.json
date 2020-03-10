@@ -4,10 +4,9 @@
   "description": "## About",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "echo \"Run your own http server!\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:server": "yarn run eslint index.js server-modules/*.js",
-    "lint:client": "yarn run eslint components/*.jsx components/phrase.js components/bingo-api.js",
+    "lint": "yarn run eslint src/**/*.jsx src/**/*.js",
     "build": "yarn webpack",
     "build:watch": "yarn webpack --watch"
   },
@@ -15,43 +14,34 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "bluebird": "^3.4.7",
-    "body-parser": "^1.15.2",
+    "babel-loader": "^8.0.6",
     "bootstrap": "^3.3.7",
-    "css-loader": "^0.18.0",
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
     "husky": "^3.0.9",
     "lodash": "4.17.13",
     "lodash.shuffle": "^4.2.0",
-    "mongodb": "^2.2.20",
-    "mongoose": "5.7.5",
-    "react": "^15",
-    "react-dom": "^15.4.2",
-    "require": "^2.4.20",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.14.0",
+    "react": "16.8",
+    "react-dom": "16",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
     "babel-cli": "^6.18.0",
     "babel-eslint": "^10",
     "eslint": "^6",
     "eslint-plugin-react": "^7.8.2",
-    "flow": "^0.2.3",
-    "flow-cli": "^0.0.0-pre",
-    "jshint": "^2.9.4",
-    "nodemon": "^1.11.0",
-    "webpack-bundle-analyzer": "3.3.2"
+    "webpack-bundle-analyzer": "3.3.2",
+    "webpack-cli": "^3.3.11"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint:client && yarn lint:server",
-      "pre-push": "yarn lint:client && yarn lint:server"
+      "pre-commit": "yarn lint && yarn build",
+      "pre-push": "yarn lint && yarn build"
     }
   }
 }
