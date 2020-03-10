@@ -8,7 +8,7 @@ import Phrases from "./phrases.jsx";
 // type View = "/bingo-card" | "/" | "/phrases";
 
 
-const MeetingBingo = ({view, phrases, isStockPhrases,
+const MeetingBingo = ({view, phrases, isStockPhrases, phraseError,
 	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard }) => {
 	if(view === "/bingo-card") {
 		return <BingoCard
@@ -29,6 +29,7 @@ const MeetingBingo = ({view, phrases, isStockPhrases,
 		return (<div id="main-wrapper" className="container">
 			<Phrases phrases={phrases}
 				isStockPhrases={isStockPhrases}
+				errorMsg={phraseError}
 
 				handleDeletePhrase={handleDeletePhrase}
 				handleAddPhrase={handleAddPhrase}
@@ -42,6 +43,7 @@ MeetingBingo.propTypes = {
 	view: PropTypes.string.isRequired,
 	phrases: PropTypes.array.isRequired,
 	isStockPhrases: PropTypes.bool.isRequired,
+	phraseError: PropTypes.string,
 
 	handleAddPhrase: PropTypes.func.isRequired,
 	handleDeletePhrase: PropTypes.func.isRequired,

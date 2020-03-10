@@ -30,7 +30,15 @@ export class PhraseInput extends React.Component {
 	}
 
 	render() {
+		let errorElem = null;
+		if(this.props.errorMsg) {
+			errorElem = (<div className="alert alert-danger">
+				<strong>Error!</strong>&nbsp;
+				<span>{this.props.errorMsg}</span>
+			</div>);
+		}
 		return (<form id="phrase-form" role="form" onSubmit={ this.handleSubmit }>
+			{errorElem}
 			<input
 				className="form-control"
 				type="text"
@@ -46,6 +54,7 @@ export class PhraseInput extends React.Component {
 }
 
 PhraseInput.propTypes = {
+	errorMsg: PropTypes.string,
 	handleAddPhrase: PropTypes.func.isRequired
 };
 
@@ -79,7 +88,7 @@ Phrase.propTypes = {
 	handleDelete: PropTypes.func.isRequired
 };
 
-export const Phrases = ({phrases, isStockPhrases,
+export const Phrases = ({phrases, isStockPhrases, errorMsg,
 	handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard}) => {
 
 	const onReset = function() {
@@ -88,7 +97,6 @@ export const Phrases = ({phrases, isStockPhrases,
 			handleResetPhrases();
 		}
 	};
-
 
 	const items = [];
 	for(let i = 0; i < phrases.length; i++) {
@@ -103,7 +111,7 @@ export const Phrases = ({phrases, isStockPhrases,
 
 	return (<div id="phrases-wrapper">
 		<h1 className="title">Phrases</h1>
-		<PhraseInput handleAddPhrase={ handleAddPhrase } />
+		<PhraseInput handleAddPhrase={ handleAddPhrase } errorMsg={errorMsg} />
 		<ol id="phrases-container">{items}</ol>
 
 		<button className="btn btn-success show-bingo-card-btn" type="button"
@@ -117,6 +125,7 @@ export const Phrases = ({phrases, isStockPhrases,
 Phrases.propTypes = {
 	phrases: PropTypes.array.isRequired,
 	isStockPhrases: PropTypes.bool.isRequired,
+	errorMsg: PropTypes.string,
 
 	handleShowBingoCard: PropTypes.func.isRequired,
 	handleDeletePhrase: PropTypes.func.isRequired,
