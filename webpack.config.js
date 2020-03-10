@@ -6,7 +6,7 @@ module.exports = {
 	entry: "./src/index",
 
 	output: {
-		path: path.resolve("public/js/dist"),
+		path: path.resolve("js/dist"),
 		filename: "meeting-bingo.bundle.js"
 	},
 

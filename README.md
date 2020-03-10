@@ -19,4 +19,4 @@ Start any HTTP server (ex. `http-server`) then navigate to root
 
 ## Sample Data
 
-- contained in `public/data/stock-phrases.json`
+- contained in `data/stock-phrases.json`
