@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 
 import BingoCard from "./card.jsx";
 import Phrases from "./phrases.jsx";
-// import { IPhrase } from "./phrase.js";
-
-// type View = "/bingo-card" | "/" | "/phrases";
+import "bootstrap/dist/css/bootstrap.min.css";
+import  "../css/style.css";
 
 
 const MeetingBingo = ({view, phrases, isStockPhrases, phraseError,

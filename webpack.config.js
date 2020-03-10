@@ -1,12 +1,12 @@
 // const webpack = require("webpack");
 const path = require("path");
-//const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
 	entry: "./src/index",
 
 	output: {
-		path: path.resolve("public/js/dist"),
+		path: path.resolve("js/dist"),
 		filename: "meeting-bingo.bundle.js"
 	},
 
@@ -25,10 +25,14 @@ module.exports = {
 					loader: "babel-loader",
 				},
 				exclude: /node_modules/,
+			},
+			{
+				test: /\.css$/,
+				use: ["style-loader", "css-loader"],
 			}
 		]
 	},
 
 	mode: "development"
-	//plugins: [new BundleAnalyzerPlugin()],
+	// plugins: [new BundleAnalyzerPlugin()],
 };

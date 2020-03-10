@@ -76,8 +76,8 @@ export class Phrase extends React.Component {
 	render() {
 		return (<li className="phrase" key={ this.props.phrase.id }>
 			<span className="phrase-text">{ this.props.phrase.phrase }</span>
-			<span className="glyphicon glyphicon-remove remove-phrase-btn" role="btn"
-				onClick={ (event) => { this.confirmDelete(event); } }></span>
+			<span className="remove-phrase-btn" role="btn"
+				onClick={ (event) => { this.confirmDelete(event); } }>&times;</span>
 		</li>);
 	}
 }

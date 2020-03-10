@@ -15,8 +15,8 @@ Implemented as a Redux/React webapp.
 
 ## Run
 
-Start any HTTP server (ex. `http-server`) then navigate to root
+Start any HTTP server to serve the root directory (ex. `http-server .`) then navigate to root.
 
 ## Sample Data
 
-- contained in `public/data/stock-phrases.json`
+- contained in `data/stock-phrases.json`
