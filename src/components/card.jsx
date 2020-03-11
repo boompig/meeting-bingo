@@ -251,7 +251,8 @@ export default class BingoCard extends React.Component {
 	resetClicked() {
 		this.setState({
 			clickedCells: {"N3": true},
-			bingoCells: []
+			bingoCells: [],
+			isBingo: false
 		});
 	}
 
@@ -281,7 +282,8 @@ export default class BingoCard extends React.Component {
 			genSeed: genSeed,
 			subsetHash: hash,
 			clickedCells: {"N3": true},
-			bingoCells: []
+			bingoCells: [],
+			isBingo: false
 		});
 	}
 
@@ -289,13 +291,17 @@ export default class BingoCard extends React.Component {
 		return (<div id="grid-wrapper">
 			<button className="btn btn-success" type="button" id="back-to-phrases-btn"
 				onClick={ this.props.onBack }>Back to phrases</button>
-			<BingoGrid phrases={ this.state.subset }
-				clickedCells={this.state.clickedCells}
-				bingoCells={this.state.bingoCells}
-				handleCellClicked={this.onCellClicked} />
+			{this.state.isBingo ?
+				<img src="img/bingo.gif" /> :
+				<BingoGrid phrases={this.state.subset}
+					clickedCells={this.state.clickedCells}
+					bingoCells={this.state.bingoCells}
+					handleCellClicked={this.onCellClicked} />
+			}
 
-			<button className="btn btn-warning btn reset-clicked-cells-btn" type="button"
-				onClick={ this.resetClicked }>Reset Clicked Cells</button>
+			{this.state.isBingo ? null :
+				<button className="btn btn-warning btn reset-clicked-cells-btn" type="button"
+					onClick={this.resetClicked}>Reset Clicked Cells</button>}
 			<button className="btn btn-primary btn gen-grid-btn" type="button"
 				onClick={ this.onGenClick }>Generate New Grid</button>
 		</div>);
