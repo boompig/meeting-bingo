@@ -6,7 +6,7 @@
   "scripts": {
     "start": "echo \"Run your own http server!\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "yarn run eslint src/*.jsx",
+    "lint": "yarn run eslint src/index.jsx src/*.ts",
     "build": "yarn webpack -d",
     "build:watch": "yarn webpack -d --watch",
     "build:prod": "yarn webpack -p"

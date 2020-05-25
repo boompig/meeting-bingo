@@ -29,7 +29,7 @@ const BingoApi = {
 				};
 			});
 		} else {
-			throw new Error('failed to fetch stock phrases')
+			throw new Error("failed to fetch stock phrases");
 		}
 	}
 };
