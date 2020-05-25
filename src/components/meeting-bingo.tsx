@@ -1,6 +1,6 @@
 import React from "react";
 
-import BingoCard from "./card.jsx";
+import BingoCard from "./card";
 import Phrases from "./phrases.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import  "../css/style.css";
@@ -20,7 +20,7 @@ interface IMeetingBingoProps {
 }
 
 
-const MeetingBingo = ({view, phrases, isStockPhrases, phraseError,
+const MeetingBingo : React.FC<IMeetingBingoProps> = ({view, phrases, isStockPhrases, phraseError,
 	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard }: IMeetingBingoProps) => {
 	if(view === "/bingo-card") {
 		return <BingoCard

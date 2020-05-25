@@ -6,7 +6,7 @@ import { Provider, connect } from "react-redux";
 import MeetingBingo from "./components/meeting-bingo";
 import {viewReducer} from "./reducers";
 import BingoApi from "./bingo-api";
-import {SHOW_PHRASES, SHOW_BINGO_CARD, resetPhrases, deletePhrase, addPhrase } from "./actions";
+import {Action, resetPhrases, deletePhrase, addPhrase } from "./actions";
 
 
 const mapStateToProps = state => {
@@ -15,10 +15,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		handleShowPhrases: () => dispatch({type: SHOW_PHRASES}),
-		handleShowCard: () => dispatch({type: SHOW_BINGO_CARD}),
+		handleShowPhrases: () => dispatch({type: Action.SHOW_PHRASES}),
+		handleShowCard: () => dispatch({type: Action.SHOW_BINGO_CARD}),
 
-		handleShowBingoCard: () => dispatch({type: SHOW_BINGO_CARD}),
+		handleShowBingoCard: () => dispatch({type: Action.SHOW_BINGO_CARD}),
 		handleDeletePhrase: (index) => dispatch(deletePhrase(index)),
 		handleAddPhrase: (phrase) => dispatch(addPhrase(phrase)),
 		handleResetPhrases: () => {

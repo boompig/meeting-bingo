@@ -60,8 +60,8 @@ export const viewReducer = function (state: undefined | any, action: IAction): a
 				phraseError: null
 			});
 		case Action.DELETE_PHRASE: {
-			if(!action.index) {
-				throw new Error(`action.index not set`);
+			if(typeof action.index !== 'number') {
+				throw new Error(`Error: action.index not set to a number`);
 			}
 			const phrases = [...state.phrases.slice(0, action.index), ...state.phrases.slice(action.index + 1)];
 			return Object.assign({}, state, {

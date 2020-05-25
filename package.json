@@ -6,7 +6,7 @@
   "scripts": {
     "start": "echo \"Run your own http server!\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "yarn run eslint src/**/*.jsx src/**/*.js",
+    "lint": "yarn run eslint src/*.jsx src/components/*.jsx",
     "build": "yarn webpack -d",
     "build:watch": "yarn webpack -d --watch",
     "build:prod": "yarn webpack -p"
@@ -34,6 +34,7 @@
     "@babel/preset-react": "^7.9.4",
     "@types/jquery": "^3.3.38",
     "@types/lodash": "^4.14.152",
+    "@types/lodash.shuffle": "^4.2.6",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
