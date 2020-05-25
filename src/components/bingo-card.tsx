@@ -1,5 +1,6 @@
 import React from "react";
 import shuffle from "lodash.shuffle";
+import {IPhrase} from "../bingo-api";
 
 const COLS = ["B", "I", "N", "G", "O"];
 
@@ -69,11 +70,8 @@ export class BingoGrid extends React.PureComponent<IBingoGridProps, {}> {
 
 /**
  * Not the most efficient algorithm but it gets the job done
- * @param {string[]} arr
- * @param {number} size
- * @returns {string[]}
  */
-function randomSubset(arr: string[], size: number): string[] {
+function randomSubset(arr: IPhrase[], size: number): IPhrase[] {
 	let shuffled = shuffle(arr.slice(0));
 	return shuffled.slice(0, size);
 }
@@ -177,8 +175,8 @@ function checkMinorDiagonalBingo(clickedCells: any, key: string): boolean {
 }
 
 interface IBingoCardProps {
-	phrases: any[];
-	onBack: any;
+	phrases: IPhrase[];
+	onBack(): void;
 }
 
 interface IBingoCardState {

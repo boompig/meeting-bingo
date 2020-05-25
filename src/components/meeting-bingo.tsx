@@ -1,6 +1,7 @@
 import React from "react";
 
-import BingoCard from "./card";
+import {IPhrase} from "../bingo-api"
+import BingoCard from "./bingo-card";
 import Phrases from "./phrases";
 import "bootstrap/dist/css/bootstrap.min.css";
 import  "../css/style.css";
@@ -8,20 +9,21 @@ import  "../css/style.css";
 
 interface IMeetingBingoProps {
 	view: string;
-	phrases: any[];
+	phrases: IPhrase[];
 	isStockPhrases: boolean;
 	phraseError: string | null;
 
-	handleAddPhrase: any;
-	handleDeletePhrase: any;
-	handleShowPhrases: any;
-	handleShowBingoCard: any;
-	handleResetPhrases: any;
+	handleAddPhrase(phrase: string): void;
+	handleDeletePhrase(index: number): void;
+	handleShowPhrases(): void;
+	handleShowBingoCard(): void;
+	handleResetPhrases(phrases: IPhrase[]): void;
 }
 
 
 const MeetingBingo : React.FC<IMeetingBingoProps> = ({view, phrases, isStockPhrases, phraseError,
 	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard }: IMeetingBingoProps) => {
+
 	if(view === "/bingo-card") {
 		return <BingoCard
 			phrases={ phrases }

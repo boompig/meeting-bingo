@@ -1,5 +1,4 @@
 import "whatwg-fetch";
-//import { IPhrase } from "./phrase.js";
 
 const getJSON = async (url: string): Promise<Response> => {
 	return fetch(url, {
@@ -14,8 +13,13 @@ interface IData {
 	phrases: string[];
 }
 
+export interface IPhrase {
+	id: number;
+	phrase: string;
+}
+
 const BingoApi = {
-	getPhrases: async function() {
+	getPhrases: async function(): Promise<IPhrase[]> {
 		const url = "./data/stock-phrases.json";
 		const response = await getJSON(url);
 		console.log(response);

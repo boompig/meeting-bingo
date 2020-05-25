@@ -1,9 +1,6 @@
 import { Action, IAction } from "./actions";
+import { IPhrase } from "./bingo-api";
 
-interface IPhrase {
-	phrase: string;
-	id: number;
-}
 
 export const viewReducer = function (state: undefined | any, action: IAction): any {
 	if(typeof state === "undefined") {
