@@ -1,4 +1,7 @@
 import React from "react";
+import {IPhrase} from "../bingo-api";
+import CopyToClipboard from 'react-copy-to-clipboard';
+
 
 interface IPhraseInputProps {
 	errorMsg: string | null;
@@ -91,18 +94,21 @@ export class Phrase extends React.PureComponent<IPhraseProps, {}> {
 }
 
 interface IPhrasesProps {
-	phrases: any[];
+	phrases: IPhrase[];
 	isStockPhrases: boolean;
 	errorMsg: string | null;
+	shareLink: string | null;
 
-	handleShowBingoCard: any;
-	handleDeletePhrase: any;
-	handleAddPhrase: any;
-	handleResetPhrases: any;
+	handleDeletePhrase(index: number): void;
+	handleAddPhrase(phrase: string): void;
+	handleShowBingoCard(): void;
+	handleShare(phrases: IPhrase[]): void;
+	handleResetPhrases(): void;
 }
 
-export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, errorMsg,
-	handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard}) => {
+export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, errorMsg, shareLink,
+	handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard,
+	handleShare}) => {
 
 	const onReset = function() {
 		const userIn = confirm("Remove all custom phrases?");
@@ -127,11 +133,31 @@ export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, erro
 		<PhraseInput handleAddPhrase={ handleAddPhrase } errorMsg={errorMsg} />
 		<ol id="phrases-container">{items}</ol>
 
-		<button className="btn btn-success show-bingo-card-btn" type="button"
-			onClick={handleShowBingoCard} disabled={createIsDisabled}>Create Bingo Card</button>
-		<button className={"btn btn-danger reset-phrases-btn"} type="button"
-			disabled={isStockPhrases}
-			onClick={ onReset }>Reset Phrases</button>
+
+			{shareLink ?
+				<form role="form" className="share-form">
+					<div className="input-group">
+						<input type="text" className="form-control share-link"
+							readOnly={true} value={shareLink} />
+						<div className="input-group-append">
+							<CopyToClipboard text={shareLink}
+								onCopy={() => console.log("copied")}>
+								<button type="button" className="btn btn-copy btn-success">Copy</button>
+							</CopyToClipboard>
+						</div>
+					</div>
+				</form>: null}
+
+		<div className="btn-container">
+			{ shareLink ? null :
+				<button className="btn btn-outline-primary" type="button"
+					onClick={() => handleShare(phrases)}>Share Phrases</button> }
+			<button className="btn btn-success show-bingo-card-btn" type="button"
+				onClick={handleShowBingoCard} disabled={createIsDisabled}>Create Bingo Card</button>
+			<button className={"btn btn-danger reset-phrases-btn"} type="button"
+				disabled={isStockPhrases}
+				onClick={onReset}>Reset Phrases</button>
+		</div>
 	</div>);
 };
 

@@ -9,20 +9,25 @@ import  "../css/style.css";
 
 interface IMeetingBingoProps {
 	view: string;
+
 	phrases: IPhrase[];
 	isStockPhrases: boolean;
 	phraseError: string | null;
+	shareLink: string | null;
 
-	handleAddPhrase(phrase: string): void;
-	handleDeletePhrase(index: number): void;
 	handleShowPhrases(): void;
+
+	handleDeletePhrase(index: number): void;
+	handleAddPhrase(phrase: string): void;
 	handleShowBingoCard(): void;
-	handleResetPhrases(phrases: IPhrase[]): void;
+	handleShare(phrases: IPhrase[]): void;
+	handleResetPhrases(): void;
 }
 
 
-const MeetingBingo : React.FC<IMeetingBingoProps> = ({view, phrases, isStockPhrases, phraseError,
-	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard }: IMeetingBingoProps) => {
+const MeetingBingo : React.FC<IMeetingBingoProps> = ({view, phrases, isStockPhrases, phraseError, shareLink,
+	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard,
+	handleShare }) => {
 
 	if(view === "/bingo-card") {
 		return <BingoCard
@@ -44,10 +49,12 @@ const MeetingBingo : React.FC<IMeetingBingoProps> = ({view, phrases, isStockPhra
 			<Phrases phrases={phrases}
 				isStockPhrases={isStockPhrases}
 				errorMsg={phraseError}
+				shareLink={shareLink}
 
 				handleDeletePhrase={handleDeletePhrase}
 				handleAddPhrase={handleAddPhrase}
 				handleShowBingoCard={handleShowBingoCard}
+				handleShare={handleShare}
 				handleResetPhrases={handleResetPhrases} />
 		</div>);
 	}

@@ -1,5 +1,5 @@
 import { Action, IAction } from "./actions";
-import { IPhrase } from "./bingo-api";
+import { IPhrase, BingoApi } from "./bingo-api";
 
 
 export const viewReducer = function (state: undefined | any, action: IAction): any {
@@ -38,14 +38,18 @@ export const viewReducer = function (state: undefined | any, action: IAction): a
 					phrases: newPhrases,
 					nextId: state.nextId + 1,
 					isStockPhrases: false,
-					phraseError: null
+					phraseError: null,
+					shareLink: null,
 				});
 			} else {
 				return Object.assign({}, state, {
 					phraseError: `${action.phrase} already present in phrases`
 				});
 			}
-		case Action.RESET_PHRASES:
+		case Action.RESET_PHRASES: {
+			if(!action.phrases) {
+				throw new Error("Error: action.phrases not set for RESET action");
+			}
 			const nextId = Math.max(...action.phrases.map((p: IPhrase) => {
 				return p.id;
 			})) + 1;
@@ -54,8 +58,10 @@ export const viewReducer = function (state: undefined | any, action: IAction): a
 				phrases: action.phrases,
 				nextId: nextId,
 				isStockPhrases: true,
-				phraseError: null
+				phraseError: null,
+				shareLink: null,
 			});
+		}
 		case Action.DELETE_PHRASE: {
 			if(typeof action.index !== "number") {
 				throw new Error("Error: action.index not set to a number");
@@ -64,7 +70,17 @@ export const viewReducer = function (state: undefined | any, action: IAction): a
 			return Object.assign({}, state, {
 				phrases: phrases,
 				isStockPhrases: false,
-				phraseError: null
+				phraseError: null,
+				shareLink: null,
+			});
+		}
+		case Action.SHARE_PHRASES: {
+			if(!action.phrases) {
+				throw new Error("Error: action.phrases not set for SHARE action");
+			}
+			const link = BingoApi.sharePhrases(action.phrases);
+			return Object.assign({}, state, {
+				shareLink: link,
 			});
 		}
 		default:

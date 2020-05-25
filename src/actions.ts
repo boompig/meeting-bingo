@@ -1,4 +1,5 @@
 // actions
+import {IPhrase} from "./bingo-api";
 
 export enum Action {
 	SHOW_PHRASES = "SHOW_PHRASES",
@@ -6,6 +7,7 @@ export enum Action {
 	RESET_PHRASES = "RESET_PHRASES",
 	ADD_PHRASE = "ADD_PHRASE",
 	DELETE_PHRASE = "DELETE_PHRASE",
+	SHARE_PHRASES = "SHARE_PHRASES",
 }
 
 export interface IAction {
@@ -15,7 +17,7 @@ export interface IAction {
 	phrase?: string;
 
 	// resetPhrase
-	phrases?: any;
+	phrases?: IPhrase[];
 
 	// deletePhrase
 	index?: number;
@@ -40,5 +42,12 @@ export function deletePhrase(index: number) {
 	return {
 		type: Action.DELETE_PHRASE,
 		index
+	};
+}
+
+export function sharePhrases(phrases: IPhrase[]) {
+	return {
+		type: Action.SHARE_PHRASES,
+		phrases
 	};
 }
