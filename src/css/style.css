@@ -99,7 +99,7 @@ table th {
 	max-width: 600px;
 }
 
-.gen-grid-btn, .reset-clicked-cells-btn {
+.btn-container .btn {
 	margin-top: .5rem;
 	width: 100%;
 }

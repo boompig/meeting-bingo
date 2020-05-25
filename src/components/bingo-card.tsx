@@ -181,11 +181,14 @@ interface IBingoCardProps {
 
 interface IBingoCardState {
 	subset: any[];
-	clickedCells: any;
-	bingoCells: any[];
+
+	clickedCells: {[key: string]: boolean};
+	bingoCells: string[];
 	isBingo: boolean;
 	subsetHash: string;
 	genSeed: number;
+
+	showGif: boolean;
 }
 
 export default class BingoCard extends React.PureComponent<IBingoCardProps, IBingoCardState> {
@@ -209,11 +212,27 @@ export default class BingoCard extends React.PureComponent<IBingoCardProps, IBin
 			// mechanism to avoid regeneration of bingo card on each click
 			subsetHash: "",
 			genSeed: 1,
+
+			showGif: false,
 		};
 
 		this.resetClicked = this.resetClicked.bind(this);
 		this.onCellClicked = this.onCellClicked.bind(this);
 		this.onGenClick = this.onGenClick.bind(this);
+		this.onHideGif = this.onHideGif.bind(this);
+		this.onShowGif = this.onShowGif.bind(this);
+	}
+
+	onShowGif() {
+		this.setState({
+			showGif: true
+		});
+	}
+
+	onHideGif() {
+		this.setState({
+			showGif: false
+		});
 	}
 
 	/**
@@ -221,6 +240,8 @@ export default class BingoCard extends React.PureComponent<IBingoCardProps, IBin
 	 */
 	onCellClicked(key: string) {
 		if(!(key in this.state.clickedCells)) {
+			let showGif = this.state.showGif;
+
 			// console.log("clicked cell " + key + " for the first time");
 			// add to clicked cells
 			const newItem : any= {};
@@ -251,10 +272,15 @@ export default class BingoCard extends React.PureComponent<IBingoCardProps, IBin
 				bingoCells = [...bingoCells, ...getMinorDiagonalCells()];
 			}
 
+			if(isBingo && !this.state.isBingo) {
+				showGif = true;
+			}
+
 			this.setState({
 				clickedCells: clickedCells,
 				bingoCells: bingoCells,
-				isBingo: isBingo
+				isBingo: isBingo,
+				showGif: showGif,
 			});
 		}
 	}
@@ -294,7 +320,8 @@ export default class BingoCard extends React.PureComponent<IBingoCardProps, IBin
 			subsetHash: hash,
 			clickedCells: {"N3": true},
 			bingoCells: [],
-			isBingo: false
+			isBingo: false,
+			showGif: false,
 		});
 	}
 
@@ -302,7 +329,7 @@ export default class BingoCard extends React.PureComponent<IBingoCardProps, IBin
 		return (<div id="grid-wrapper">
 			<button className="btn btn-success" type="button" id="back-to-phrases-btn"
 				onClick={ this.props.onBack }>Back to phrases</button>
-			{this.state.isBingo ?
+			{ (this.state.isBingo && this.state.showGif) ?
 				<img src="img/bingo.gif" /> :
 				<BingoGrid phrases={this.state.subset}
 					clickedCells={this.state.clickedCells}
@@ -310,11 +337,20 @@ export default class BingoCard extends React.PureComponent<IBingoCardProps, IBin
 					handleCellClicked={this.onCellClicked} />
 			}
 
-			{this.state.isBingo ? null :
-				<button className="btn btn-warning btn reset-clicked-cells-btn" type="button"
-					onClick={this.resetClicked}>Reset Clicked Cells</button>}
-			<button className="btn btn-primary btn gen-grid-btn" type="button"
-				onClick={ this.onGenClick }>Generate New Grid</button>
+			<div className="btn-container">
+				{this.state.isBingo && this.state.showGif ?
+					<button className="btn btn-outline-success" type="button"
+						onClick={this.onHideGif}>Show Completed Bingo Card</button> : null}
+				{this.state.isBingo && !this.state.showGif ?
+					<button className="btn btn-outline-success" type="button"
+						onClick={this.onShowGif}>Show Animation</button> : null }
+
+				{this.state.isBingo ? null :
+					<button className="btn btn-warning reset-clicked-cells-btn" type="button"
+						onClick={this.resetClicked}>Reset Clicked Cells</button>}
+				<button className="btn btn-primary gen-grid-btn" type="button"
+					onClick={ this.onGenClick }>Generate New Grid</button>
+			</div>
 		</div>);
 	}
 }
