@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
 
-import MeetingBingo from "./components/meeting-bingo.jsx";
+import MeetingBingo from "./components/meeting-bingo";
 import {viewReducer} from "./reducers";
 import BingoApi from "./bingo-api";
 import {SHOW_PHRASES, SHOW_BINGO_CARD, resetPhrases, deletePhrase, addPhrase } from "./actions";

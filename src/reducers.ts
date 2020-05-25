@@ -1,7 +1,11 @@
-import {SHOW_PHRASES, SHOW_BINGO_CARD, RESET_PHRASES, ADD_PHRASE, DELETE_PHRASE } from "./actions";
+import { Action, IAction } from "./actions";
 
+interface IPhrase {
+	phrase: string;
+	id: number;
+}
 
-export const viewReducer = function (state, action) {
+export const viewReducer = function (state: undefined | any, action: IAction): any {
 	if(typeof state === "undefined") {
 		// initial state
 		return {
@@ -13,18 +17,20 @@ export const viewReducer = function (state, action) {
 	}
 
 	switch (action.type) {
-		case SHOW_PHRASES:
+		case Action.SHOW_PHRASES:
 			return Object.assign({}, state, {
 				view: "/phrases",
 			});
-		case SHOW_BINGO_CARD:
+		case Action.SHOW_BINGO_CARD:
 			return Object.assign({}, state, {
 				view: "/bingo-card",
 			});
 
-		case ADD_PHRASE:
+		case Action.ADD_PHRASE:
 			// does the phrase exist?
-			const phrases = state.phrases.map(p => p.phrase);
+			const phrases = state.phrases.map((p: IPhrase) => {
+				return p.phrase;
+			});
 			if(phrases.indexOf(action.phrase) === -1) {
 				const newP = {
 					id: state.nextId,
@@ -42,8 +48,10 @@ export const viewReducer = function (state, action) {
 					phraseError: `${action.phrase} already present in phrases`
 				});
 			}
-		case RESET_PHRASES:
-			const nextId = Math.max(...action.phrases.map(p => p.id)) + 1;
+		case Action.RESET_PHRASES:
+			const nextId = Math.max(...action.phrases.map((p: IPhrase) => {
+				return p.id;
+			})) + 1;
 			// loaded phrases from backend
 			return Object.assign({}, state, {
 				phrases: action.phrases,
@@ -51,7 +59,10 @@ export const viewReducer = function (state, action) {
 				isStockPhrases: true,
 				phraseError: null
 			});
-		case DELETE_PHRASE: {
+		case Action.DELETE_PHRASE: {
+			if(!action.index) {
+				throw new Error(`action.index not set`);
+			}
 			const phrases = [...state.phrases.slice(0, action.index), ...state.phrases.slice(action.index + 1)];
 			return Object.assign({}, state, {
 				phrases: phrases,

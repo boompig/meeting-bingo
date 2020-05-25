@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import BingoCard from "./card.jsx";
 import Phrases from "./phrases.jsx";
@@ -7,8 +6,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import  "../css/style.css";
 
 
+interface IMeetingBingoProps {
+	view: string;
+	phrases: any[];
+	isStockPhrases: boolean;
+	phraseError: string | null;
+
+	handleAddPhrase: any;
+	handleDeletePhrase: any;
+	handleShowPhrases: any;
+	handleShowBingoCard: any;
+	handleResetPhrases: any;
+}
+
+
 const MeetingBingo = ({view, phrases, isStockPhrases, phraseError,
-	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard }) => {
+	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard }: IMeetingBingoProps) => {
 	if(view === "/bingo-card") {
 		return <BingoCard
 			phrases={ phrases }
@@ -36,19 +49,6 @@ const MeetingBingo = ({view, phrases, isStockPhrases, phraseError,
 				handleResetPhrases={handleResetPhrases} />
 		</div>);
 	}
-};
-
-MeetingBingo.propTypes = {
-	view: PropTypes.string.isRequired,
-	phrases: PropTypes.array.isRequired,
-	isStockPhrases: PropTypes.bool.isRequired,
-	phraseError: PropTypes.string,
-
-	handleAddPhrase: PropTypes.func.isRequired,
-	handleDeletePhrase: PropTypes.func.isRequired,
-	handleShowPhrases: PropTypes.func.isRequired,
-	handleShowBingoCard: PropTypes.func.isRequired,
-	handleResetPhrases: PropTypes.func.isRequired
 };
 
 export default MeetingBingo;
