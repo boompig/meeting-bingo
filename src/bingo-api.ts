@@ -47,6 +47,7 @@ export const BingoApi = {
 		// step 2 - encode the phrases
 		const s = btoa(JSON.stringify(l));
 		const u = new URL(window.location.origin);
+		u.pathname = window.location.pathname;
 		u.searchParams.set("phrases", s);
 		return u.toString();
 	},
