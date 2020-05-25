@@ -1,14 +1,22 @@
 import React from "react";
 import shuffle from "lodash.shuffle";
-import PropType from "prop-types";
+import {IPhrase} from "../bingo-api";
 
 const COLS = ["B", "I", "N", "G", "O"];
+
+interface IBingoGridProps {
+	phrases: any[];
+	clickedCells: any;
+	bingoCells: any[];
+
+	handleCellClicked: any;
+}
 
 /**
  * This component should not receive all phrases, only 24 of them
  */
-export class BingoGrid extends React.Component {
-	constructor(props) {
+export class BingoGrid extends React.PureComponent<IBingoGridProps, {}> {
+	constructor(props: IBingoGridProps) {
 		super(props);
 
 	}
@@ -59,21 +67,11 @@ export class BingoGrid extends React.Component {
 	}
 }
 
-BingoGrid.propTypes = {
-	phrases: PropType.array.isRequired,
-	clickedCells: PropType.object.isRequired,
-	bingoCells: PropType.array,
-
-	handleCellClicked: PropType.func.isRequired
-};
 
 /**
  * Not the most efficient algorithm but it gets the job done
- * @param {string[]} arr
- * @param {number} size
- * @returns {string[]}
  */
-function randomSubset(arr, size) {
+function randomSubset(arr: IPhrase[], size: number): IPhrase[] {
 	let shuffled = shuffle(arr.slice(0));
 	return shuffled.slice(0, size);
 }
@@ -83,7 +81,7 @@ function randomSubset(arr, size) {
  * @param {number} genSeed
  * @returns {string}
  */
-function computeArrayHash(phrases, genSeed) {
+function computeArrayHash(phrases: any[], genSeed: number): string {
 	let l = phrases.map((p) => p.phrase);
 	return l.join(",") + genSeed;
 }
@@ -92,21 +90,20 @@ function computeArrayHash(phrases, genSeed) {
  * @param {string} row 1-indexed row as string
  * @returns {string[]}
  */
-function getRowCells(row) {
+function getRowCells(row: string): string[] {
 	return COLS.map((col) => col + row);
 }
 
 /**
- * @param {string} key
  * @returns {string[]}
  */
-function getMajorDiagonalCells() {
+function getMajorDiagonalCells(): string[] {
 	return COLS.map((row, i) => {
 		return row + (i + 1);
 	});
 }
 
-function getMinorDiagonalCells() {
+function getMinorDiagonalCells(): string[] {
 	return COLS.map((row, i) => {
 		return row + (5 - i);
 	});
@@ -116,7 +113,7 @@ function getMinorDiagonalCells() {
  * @param {string} col name of column
  * @returns {string[]}
  */
-function getColumnCells(col) {
+function getColumnCells(col: string): string[] {
 	return [1, 2, 3, 4, 5].map((row) => col + row);
 }
 
@@ -126,7 +123,7 @@ function getColumnCells(col) {
  * @param {string} key
  * @returns {boolean}
  */
-function checkBingo(bingoCells, clickedCells, key) {
+function checkBingo(bingoCells: string[], clickedCells: any, key: string): boolean {
 	for(let cell of bingoCells) {
 		if(cell !== key && !(cell in clickedCells)) {
 			return false;
@@ -140,7 +137,7 @@ function checkBingo(bingoCells, clickedCells, key) {
  * @param {string} key
  * @returns {boolean}
  */
-function checkRowBingo(clickedCells, key) {
+function checkRowBingo(clickedCells: any, key: string): boolean {
 	const row = key[1];
 	const bingoCells = getRowCells(row);
 	return checkBingo(bingoCells, clickedCells, key);
@@ -151,7 +148,7 @@ function checkRowBingo(clickedCells, key) {
  * @param {string} key
  * @returns {boolean}
  */
-function checkColumnBingo(clickedCells, key) {
+function checkColumnBingo(clickedCells: any, key: string): boolean {
 	const col = key[0];
 	const bingoCells = getColumnCells(col);
 	return checkBingo(bingoCells, clickedCells, key);
@@ -162,7 +159,7 @@ function checkColumnBingo(clickedCells, key) {
  * @param {string} key
  * @returns {boolean}
  */
-function checkMajorDiagonalBingo(clickedCells, key) {
+function checkMajorDiagonalBingo(clickedCells: any, key: string): boolean {
 	const bingoCells = getMajorDiagonalCells();
 	return checkBingo(bingoCells, clickedCells, key);
 }
@@ -172,14 +169,31 @@ function checkMajorDiagonalBingo(clickedCells, key) {
  * @param {string} key
  * @returns {boolean}
  */
-function checkMinorDiagonalBingo(clickedCells, key) {
+function checkMinorDiagonalBingo(clickedCells: any, key: string): boolean {
 	const bingoCells = getMinorDiagonalCells();
 	return checkBingo(bingoCells, clickedCells, key);
 }
 
-export default class BingoCard extends React.Component {
+interface IBingoCardProps {
+	phrases: IPhrase[];
+	onBack(): void;
+}
 
-	constructor(props) {
+interface IBingoCardState {
+	subset: any[];
+
+	clickedCells: {[key: string]: boolean};
+	bingoCells: string[];
+	isBingo: boolean;
+	subsetHash: string;
+	genSeed: number;
+
+	showGif: boolean;
+}
+
+export default class BingoCard extends React.PureComponent<IBingoCardProps, IBingoCardState> {
+
+	constructor(props: IBingoCardProps) {
 		super(props);
 
 		this.state = {
@@ -198,24 +212,42 @@ export default class BingoCard extends React.Component {
 			// mechanism to avoid regeneration of bingo card on each click
 			subsetHash: "",
 			genSeed: 1,
+
+			showGif: false,
 		};
 
 		this.resetClicked = this.resetClicked.bind(this);
 		this.onCellClicked = this.onCellClicked.bind(this);
 		this.onGenClick = this.onGenClick.bind(this);
+		this.onHideGif = this.onHideGif.bind(this);
+		this.onShowGif = this.onShowGif.bind(this);
+	}
+
+	onShowGif() {
+		this.setState({
+			showGif: true
+		});
+	}
+
+	onHideGif() {
+		this.setState({
+			showGif: false
+		});
 	}
 
 	/**
 	 * @param {string} key 2 chars: name of column + 1-indexed row
 	 */
-	onCellClicked(key) {
+	onCellClicked(key: string) {
 		if(!(key in this.state.clickedCells)) {
+			let showGif = this.state.showGif;
+
 			// console.log("clicked cell " + key + " for the first time");
 			// add to clicked cells
-			const newItem = {};
+			const newItem : any= {};
 			newItem[key] = true;
 			const clickedCells = Object.assign({}, this.state.clickedCells, newItem);
-			let bingoCells = [];
+			let bingoCells: string[] = [];
 			let isBingo = false;
 
 			// check whether we're at GAME OVER
@@ -240,10 +272,15 @@ export default class BingoCard extends React.Component {
 				bingoCells = [...bingoCells, ...getMinorDiagonalCells()];
 			}
 
+			if(isBingo && !this.state.isBingo) {
+				showGif = true;
+			}
+
 			this.setState({
 				clickedCells: clickedCells,
 				bingoCells: bingoCells,
-				isBingo: isBingo
+				isBingo: isBingo,
+				showGif: showGif,
 			});
 		}
 	}
@@ -256,7 +293,7 @@ export default class BingoCard extends React.Component {
 		});
 	}
 
-	static getDerivedStateFromProps(props, state) {
+	static getDerivedStateFromProps(props: IBingoCardProps, state: IBingoCardState) {
 		// keep calm and carry on
 		let hash = computeArrayHash(props.phrases, state.genSeed);
 		if(hash !== state.subsetHash) {
@@ -270,7 +307,7 @@ export default class BingoCard extends React.Component {
 		}
 	}
 
-	onGenClick(event) {
+	onGenClick(event: React.SyntheticEvent) {
 		event.preventDefault();
 		// step 1 -> genSeed += 1
 		const genSeed = this.state.genSeed + 1;
@@ -283,15 +320,16 @@ export default class BingoCard extends React.Component {
 			subsetHash: hash,
 			clickedCells: {"N3": true},
 			bingoCells: [],
-			isBingo: false
+			isBingo: false,
+			showGif: false,
 		});
 	}
 
-	render() {
+	render(): JSX.Element {
 		return (<div id="grid-wrapper">
 			<button className="btn btn-success" type="button" id="back-to-phrases-btn"
 				onClick={ this.props.onBack }>Back to phrases</button>
-			{this.state.isBingo ?
+			{ (this.state.isBingo && this.state.showGif) ?
 				<img src="img/bingo.gif" /> :
 				<BingoGrid phrases={this.state.subset}
 					clickedCells={this.state.clickedCells}
@@ -299,16 +337,20 @@ export default class BingoCard extends React.Component {
 					handleCellClicked={this.onCellClicked} />
 			}
 
-			{this.state.isBingo ? null :
-				<button className="btn btn-warning btn reset-clicked-cells-btn" type="button"
-					onClick={this.resetClicked}>Reset Clicked Cells</button>}
-			<button className="btn btn-primary btn gen-grid-btn" type="button"
-				onClick={ this.onGenClick }>Generate New Grid</button>
+			<div className="btn-container">
+				{this.state.isBingo && this.state.showGif ?
+					<button className="btn btn-outline-success" type="button"
+						onClick={this.onHideGif}>Show Completed Bingo Card</button> : null}
+				{this.state.isBingo && !this.state.showGif ?
+					<button className="btn btn-outline-success" type="button"
+						onClick={this.onShowGif}>Show Animation</button> : null }
+
+				{this.state.isBingo ? null :
+					<button className="btn btn-warning reset-clicked-cells-btn" type="button"
+						onClick={this.resetClicked}>Reset Clicked Cells</button>}
+				<button className="btn btn-primary gen-grid-btn" type="button"
+					onClick={ this.onGenClick }>Generate New Grid</button>
+			</div>
 		</div>);
 	}
 }
-
-BingoCard.propTypes = {
-	phrases: PropType.array.isRequired,
-	onBack: PropType.func.isRequired
-};

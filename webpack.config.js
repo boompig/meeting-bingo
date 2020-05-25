@@ -19,16 +19,23 @@ module.exports = {
 	module: {
 		rules: [
 			// use babel to convert ES6
-			{
-				test: /\.jsx?$/,
-				use: {
-					loader: "babel-loader",
-				},
-				exclude: /node_modules/,
-			},
+			// {
+			// 	test: /\.jsx?$/,
+			// 	use: {
+			// 		loader: "babel-loader",
+			// 	},
+			// 	exclude: /node_modules/,
+			// },
 			{
 				test: /\.css$/,
 				use: ["style-loader", "css-loader"],
+			},
+			{
+				test: /\.[jt]sx?$/,
+				use: {
+					loader: "awesome-typescript-loader"
+				},
+				exclude: /node_modules/
 			}
 		]
 	},

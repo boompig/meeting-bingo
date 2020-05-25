@@ -1,14 +1,34 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-import BingoCard from "./card.jsx";
-import Phrases from "./phrases.jsx";
+import {IPhrase} from "../bingo-api"
+import BingoCard from "./bingo-card";
+import Phrases from "./phrases";
 import "bootstrap/dist/css/bootstrap.min.css";
 import  "../css/style.css";
 
 
-const MeetingBingo = ({view, phrases, isStockPhrases, phraseError,
-	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard }) => {
+interface IMeetingBingoProps {
+	view: string;
+
+	phrases: IPhrase[];
+	isStockPhrases: boolean;
+	phraseError: string | null;
+	shareLink: string | null;
+
+	handleShowPhrases(): void;
+
+	handleDeletePhrase(index: number): void;
+	handleAddPhrase(phrase: string): void;
+	handleShowBingoCard(): void;
+	handleShare(phrases: IPhrase[]): void;
+	handleResetPhrases(): void;
+}
+
+
+const MeetingBingo : React.FC<IMeetingBingoProps> = ({view, phrases, isStockPhrases, phraseError, shareLink,
+	handleShowPhrases, handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard,
+	handleShare }) => {
+
 	if(view === "/bingo-card") {
 		return <BingoCard
 			phrases={ phrases }
@@ -29,26 +49,15 @@ const MeetingBingo = ({view, phrases, isStockPhrases, phraseError,
 			<Phrases phrases={phrases}
 				isStockPhrases={isStockPhrases}
 				errorMsg={phraseError}
+				shareLink={shareLink}
 
 				handleDeletePhrase={handleDeletePhrase}
 				handleAddPhrase={handleAddPhrase}
 				handleShowBingoCard={handleShowBingoCard}
+				handleShare={handleShare}
 				handleResetPhrases={handleResetPhrases} />
 		</div>);
 	}
-};
-
-MeetingBingo.propTypes = {
-	view: PropTypes.string.isRequired,
-	phrases: PropTypes.array.isRequired,
-	isStockPhrases: PropTypes.bool.isRequired,
-	phraseError: PropTypes.string,
-
-	handleAddPhrase: PropTypes.func.isRequired,
-	handleDeletePhrase: PropTypes.func.isRequired,
-	handleShowPhrases: PropTypes.func.isRequired,
-	handleShowBingoCard: PropTypes.func.isRequired,
-	handleResetPhrases: PropTypes.func.isRequired
 };
 
 export default MeetingBingo;
