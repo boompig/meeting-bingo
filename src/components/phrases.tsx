@@ -1,9 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+interface IPhraseInputProps {
+	errorMsg: string | null;
+	handleAddPhrase: any;
+}
 
-export class PhraseInput extends React.Component {
-	constructor(props) {
+interface IPhraseInputState {
+	newPhrase: string;
+}
+
+export class PhraseInput extends React.PureComponent<IPhraseInputProps, IPhraseInputState> {
+	constructor(props: IPhraseInputProps) {
 		super(props);
 		this.state = {
 			newPhrase: ""
@@ -13,13 +21,13 @@ export class PhraseInput extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleChange(event) {
+	handleChange(event: React.SyntheticEvent) {
 		if(event.target instanceof window.HTMLInputElement) {
 			this.setState({ "newPhrase": event.target.value });
 		}
 	}
 
-	handleSubmit(event) {
+	handleSubmit(event: React.SyntheticEvent) {
 		event.preventDefault();
 		this.props.handleAddPhrase(this.state.newPhrase);
 
@@ -29,7 +37,7 @@ export class PhraseInput extends React.Component {
 		});
 	}
 
-	render() {
+	render(): JSX.Element {
 		let errorElem = null;
 		if(this.props.errorMsg) {
 			errorElem = (<div className="alert alert-danger">
@@ -53,19 +61,20 @@ export class PhraseInput extends React.Component {
 	}
 }
 
-PhraseInput.propTypes = {
-	errorMsg: PropTypes.string,
-	handleAddPhrase: PropTypes.func.isRequired
-};
+interface IPhraseProps {
+	index: number;
+	phrase: any;
+	handleDelete: any;
+}
 
-export class Phrase extends React.Component {
-	constructor(props) {
+export class Phrase extends React.PureComponent<IPhraseProps, {}> {
+	constructor(props: IPhraseProps) {
 		super(props);
 
 		this.confirmDelete = this.confirmDelete.bind(this);
 	}
 
-	confirmDelete(event) {
+	confirmDelete(event: React.SyntheticEvent) {
 		event.preventDefault();
 		const userIn = confirm(`Are you sure you want to delete phrase '${this.props.phrase.phrase}'?`);
 		if(userIn) {
@@ -73,7 +82,7 @@ export class Phrase extends React.Component {
 		}
 	}
 
-	render() {
+	render(): JSX.Element {
 		return (<li className="phrase" key={ this.props.phrase.id }>
 			<span className="phrase-text">{ this.props.phrase.phrase }</span>
 			<span className="remove-phrase-btn" role="btn"
@@ -82,13 +91,18 @@ export class Phrase extends React.Component {
 	}
 }
 
-Phrase.propTypes = {
-	index: PropTypes.number.isRequired,
-	phrase: PropTypes.object.isRequired,
-	handleDelete: PropTypes.func.isRequired
-};
+interface IPhrasesProps {
+	phrases: any[];
+	isStockPhrases: boolean;
+	errorMsg: string | null;
 
-export const Phrases = ({phrases, isStockPhrases, errorMsg,
+	handleShowBingoCard: any;
+	handleDeletePhrase: any;
+	handleAddPhrase: any;
+	handleResetPhrases: any;
+}
+
+export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, errorMsg,
 	handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard}) => {
 
 	const onReset = function() {
@@ -120,17 +134,6 @@ export const Phrases = ({phrases, isStockPhrases, errorMsg,
 			disabled={isStockPhrases}
 			onClick={ onReset }>Reset Phrases</button>
 	</div>);
-};
-
-Phrases.propTypes = {
-	phrases: PropTypes.array.isRequired,
-	isStockPhrases: PropTypes.bool.isRequired,
-	errorMsg: PropTypes.string,
-
-	handleShowBingoCard: PropTypes.func.isRequired,
-	handleDeletePhrase: PropTypes.func.isRequired,
-	handleAddPhrase: PropTypes.func.isRequired,
-	handleResetPhrases: PropTypes.func.isRequired
 };
 
 export default Phrases;

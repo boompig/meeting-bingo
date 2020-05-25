@@ -1,7 +1,7 @@
 import React from "react";
 
 import BingoCard from "./card";
-import Phrases from "./phrases.jsx";
+import Phrases from "./phrases";
 import "bootstrap/dist/css/bootstrap.min.css";
 import  "../css/style.css";
 
