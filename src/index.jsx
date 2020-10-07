@@ -21,11 +21,15 @@ const mapDispatchToProps = dispatch => {
 		handleShowBingoCard: () => dispatch({type: Action.SHOW_BINGO_CARD}),
 		handleDeletePhrase: (index) => dispatch(deletePhrase(index)),
 		handleAddPhrase: (phrase) => dispatch(addPhrase(phrase)),
-		handleResetPhrases: () => {
-			return BingoApi.getPhrases()
-				.then((phrases) => {
-					dispatch(resetPhrases(phrases));
-				});
+		handleResetPhrases: (phrases) => {
+			if(phrases) {
+				return dispatch(resetPhrases(phrases));
+			} else {
+				return BingoApi.getPhrases()
+					.then((phrases) => {
+						dispatch(resetPhrases(phrases));
+					});
+			}
 		}
 	};
 };
@@ -41,8 +45,12 @@ if(u.searchParams.get("phrases")) {
 	// then set phrases accordingly
 	store.dispatch(resetPhrases(phrases));
 } else {
+	let phraseFile = null;
+	if(u.searchParams.get("phraseFile")) {
+		phraseFile = u.searchParams.get("phraseFile");
+	}
 	// otherwise use the default
-	BingoApi.getPhrases()
+	BingoApi.getPhrases(phraseFile)
 		.then((phrases) => {
 			store.dispatch(resetPhrases(phrases));
 		});

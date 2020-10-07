@@ -40,6 +40,12 @@ h1.header, h1.title {
 	}
 }
 
+@media(min-width: 1100px) {
+	#main-wrapper {
+		max-width: 1024px;
+	}
+}
+
 @media(max-width: 450px) {
 	#main-wrapper {
 		max-width: 100%;

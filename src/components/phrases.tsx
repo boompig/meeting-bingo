@@ -66,6 +66,7 @@ export class PhraseInput extends React.PureComponent<IPhraseInputProps, IPhraseI
 interface IPhraseProps {
 	index: number;
 	phrase: any;
+	isEditable: boolean;
 	handleDelete: any;
 }
 
@@ -87,8 +88,9 @@ export class Phrase extends React.PureComponent<IPhraseProps, {}> {
 	render(): JSX.Element {
 		return (<li className="phrase" key={ this.props.phrase.id }>
 			<span className="phrase-text">{ this.props.phrase.phrase }</span>
-			<span className="remove-phrase-btn" role="btn"
-				onClick={ (event) => { this.confirmDelete(event); } }>&times;</span>
+			{ this.props.isEditable ?
+				<span className="remove-phrase-btn" role="btn"
+					onClick={ (event) => { this.confirmDelete(event); } }>&times;</span> : null }
 		</li>);
 	}
 }
@@ -98,6 +100,7 @@ interface IPhrasesProps {
 	isStockPhrases: boolean;
 	errorMsg: string | null;
 	shareLink: string | null;
+	isEditable: boolean;
 
 	handleDeletePhrase(index: number): void;
 	handleAddPhrase(phrase: string): void;
@@ -106,7 +109,7 @@ interface IPhrasesProps {
 	handleResetPhrases(): void;
 }
 
-export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, errorMsg, shareLink,
+export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, errorMsg, shareLink, isEditable,
 	handleDeletePhrase, handleAddPhrase, handleResetPhrases, handleShowBingoCard,
 	handleShare}) => {
 
@@ -123,14 +126,19 @@ export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, erro
 			key={ phrases[i].id }
 			handleDelete={ handleDeletePhrase }
 			phrase={ phrases[i] }
+			isEditable={  isEditable }
 			index={i} />);
 	}
 
 	const createIsDisabled = phrases.length < 24;
+	let phraseInput = null;
+	if(isEditable) {
+		phraseInput = <PhraseInput handleAddPhrase={ handleAddPhrase } errorMsg={errorMsg} />;
+	}
 
 	return (<div id="phrases-wrapper">
 		<h1 className="title">Phrases</h1>
-		<PhraseInput handleAddPhrase={ handleAddPhrase } errorMsg={errorMsg} />
+		{ phraseInput }
 		<ol id="phrases-container">{items}</ol>
 
 
@@ -154,9 +162,10 @@ export const Phrases : React.FC<IPhrasesProps> = ({phrases, isStockPhrases, erro
 					onClick={() => handleShare(phrases)}>Share Phrases</button> }
 			<button className="btn btn-success show-bingo-card-btn" type="button"
 				onClick={handleShowBingoCard} disabled={createIsDisabled}>Create Bingo Card</button>
-			<button className={"btn btn-danger reset-phrases-btn"} type="button"
-				disabled={isStockPhrases}
-				onClick={onReset}>Reset Phrases</button>
+			{ isEditable ?
+				<button className={"btn btn-danger reset-phrases-btn"} type="button"
+					disabled={isStockPhrases}
+					onClick={onReset}>Reset Phrases</button> : null}
 		</div>
 	</div>);
 };

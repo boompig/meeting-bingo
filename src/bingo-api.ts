@@ -19,12 +19,12 @@ export interface IPhrase {
 }
 
 export const BingoApi = {
-	getPhrases: async function(): Promise<IPhrase[]> {
+	getPhrases: async function(phraseFile?: string | null): Promise<IPhrase[]> {
 		let url = "./data/stock-phrases.json";
-		const u = new URL(window.location.toString());
-		const searchParams = u.searchParams;
-		if (searchParams.get("phraseFile") === "debate2020") {
+		if(phraseFile && phraseFile === "debate2020") {
 			url = "./data/debate-phrases.json";
+		} else if(phraseFile && phraseFile.endsWith(".json")) {
+			url = `./data/${phraseFile}`;
 		}
 		const response = await getJSON(url);
 		console.log(response);
