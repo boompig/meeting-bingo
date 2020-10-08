@@ -90,7 +90,8 @@ class VPDebateLanding extends React.PureComponent <IVPDebateLandingProps, IVPDeb
 
 					<div className="card">
 						<div className="card-img-top">
-							<img src="img/kamala-harris.jpg" />
+							<img src="img/kamala-harris-maya-rudolph-cropped.png" />
+							{/* <img src="img/kamala-harris.jpg" /> */}
 						</div>
 						<div className="card-body">
 							<h5 className="card-title">Kamala Harris</h5>
@@ -109,7 +110,8 @@ class VPDebateLanding extends React.PureComponent <IVPDebateLandingProps, IVPDeb
 
 					<div className="card">
 						<div className="card-img-top">
-							<img src="img/mike-pence-cropped.png" />
+							{/* <img src="img/mike-pence-cropped.png" /> */}
+							<img src="img/mike-pence-snl-cropped.png" />
 						</div>
 						<div className="card-body">
 							<h5 className="card-title">Mike Pence</h5>
@@ -129,7 +131,8 @@ class VPDebateLanding extends React.PureComponent <IVPDebateLandingProps, IVPDeb
 
 					<div className="card">
 						<div className="card-img-top">
-							<img src="img/susan-page-cropped.png" />
+							{/* <img src="img/susan-page-cropped.png" /> */}
+							<img src="img/susan-page-kate-mckinnon-cropped.png" />
 						</div>
 						<div className="card-body">
 							<h5 className="card-title">Susan Page</h5>
