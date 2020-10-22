@@ -1,0 +1,43 @@
+.card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card-img-top {
+    display: 0 auto;
+    text-align: center;
+}
+
+.card {
+    max-width: 330px;
+}
+
+.card-img-top img {
+    max-width: 300px;
+}
+
+/** NOTE: this only will apply to VP debate 2020 idea */
+#main-wrapper.container-fluid {
+    max-width: 1200px !important;
+}
+
+@media(min-width: 1200px) {
+    .card-container {
+        flex-wrap: nowrap;
+    }
+}
+
+@media(max-width: 1199px) {
+    .card-container {
+        flex-wrap: wrap;
+    }
+}
+
+#main-wrapper.container-fluid button.get-started-btn {
+    margin-top: 1rem;
+}
+
+.phrase-text {
+    max-width: 420px;
+}

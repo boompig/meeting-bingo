@@ -40,6 +40,12 @@ h1.header, h1.title {
 	}
 }
 
+@media(min-width: 1100px) {
+	#main-wrapper {
+		max-width: 1024px;
+	}
+}
+
 @media(max-width: 450px) {
 	#main-wrapper {
 		max-width: 100%;
@@ -125,4 +131,25 @@ table th {
 		display: none;
 	}
 }
+
+.cell-speaker {
+	font-weight: bold;
+}
+
+.cell-speaker-biden {
+	color: blue;
+}
+
+.cell-speaker-trump {
+	color: red;
+}
+
+.cell-speaker-either {
+	color: green;
+}
+
+.cell-speaker-moderator {
+	color: #5c5e5d;
+}
+
 /* bingo card view */
