@@ -131,4 +131,25 @@ table th {
 		display: none;
 	}
 }
+
+.cell-speaker {
+	font-weight: bold;
+}
+
+.cell-speaker-biden {
+	color: blue;
+}
+
+.cell-speaker-trump {
+	color: red;
+}
+
+.cell-speaker-either {
+	color: green;
+}
+
+.cell-speaker-moderator {
+	color: #5c5e5d;
+}
+
 /* bingo card view */

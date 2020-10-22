@@ -65,7 +65,7 @@ export class PhraseInput extends React.PureComponent<IPhraseInputProps, IPhraseI
 
 interface IPhraseProps {
 	index: number;
-	phrase: any;
+	phrase: IPhrase;
 	isEditable: boolean;
 	handleDelete: any;
 }
@@ -88,6 +88,8 @@ export class Phrase extends React.PureComponent<IPhraseProps, {}> {
 	render(): JSX.Element {
 		return (<li className="phrase" key={ this.props.phrase.id }>
 			<span className="phrase-text">{ this.props.phrase.phrase }</span>
+			{ this.props.phrase.speaker ?
+				<span className="phrase-speaker">&nbsp;-&nbsp;{ this.props.phrase.speaker }</span> : null }
 			{ this.props.isEditable ?
 				<span className="remove-phrase-btn" role="btn"
 					onClick={ (event) => { this.confirmDelete(event); } }>&times;</span> : null }

@@ -9,13 +9,27 @@ const getJSON = async (url: string): Promise<Response> => {
 	});
 };
 
-interface IData {
-	phrases: string[];
+interface IPhraseWithSpeaker {
+	phrase: string;
+	speaker: string;
 }
+
+interface IDataWithSpeaker {
+	phrases: IPhraseWithSpeaker[];
+	hasSpeakers: true;
+}
+
+interface IDataNoSpeaker {
+	phrases: string[];
+	hasSpeakers: false;
+}
+
+type TData = IDataWithSpeaker | IDataNoSpeaker;
 
 export interface IPhrase {
 	id: number;
 	phrase: string;
+	speaker?: string;
 }
 
 export const BingoApi = {
@@ -29,14 +43,24 @@ export const BingoApi = {
 		const response = await getJSON(url);
 		console.log(response);
 		if(response.ok) {
-			const data : IData = await response.json();
+			const data : TData = await response.json();
 			console.log(data);
-			return data.phrases.map((phrase: string, i: number) => {
-				return {
-					"id": i + 1,
-					"phrase": phrase
-				};
-			});
+			if (data.hasSpeakers) {
+				return data.phrases.map((phrase: IPhraseWithSpeaker, i: number) => {
+					return {
+						"id": i + 1,
+						"phrase": phrase.phrase,
+						"speaker": phrase.speaker
+					};
+				});
+			} else {
+				return data.phrases.map((phrase: string, i: number) => {
+					return {
+						"id": i + 1,
+						"phrase": phrase
+					};
+				});
+			}
 		} else {
 			throw new Error("failed to fetch stock phrases");
 		}

@@ -30,12 +30,15 @@ export class BingoGrid extends React.PureComponent<IBingoGridProps, {}> {
 				let idx = col * 5 + row;
 				let key = COLS[col] + (row + 1);
 				let contents;
+				let speaker = null;
 				if(idx === 12) {
 					contents = "Free";
 				} else if(idx > 12) {
 					contents = this.props.phrases[idx - 1].phrase;
+					speaker = this.props.phrases[idx - 1].speaker;
 				} else {
 					contents = this.props.phrases[idx].phrase;
+					speaker = this.props.phrases[idx].speaker;
 				}
 
 				let classes = "bingo-tile";
@@ -44,10 +47,17 @@ export class BingoGrid extends React.PureComponent<IBingoGridProps, {}> {
 				} else if(key in this.props.clickedCells) {
 					classes += " cell-clicked";
 				}
+				let speakerClasses = "cell-speaker";
+				if(speaker) {
+					// NOTE: have to be careful here about where the speaker comes from
+					speakerClasses += ` cell-speaker-${speaker.toLowerCase()}`;
+				}
 
 				cells.push(<td key={key} data-key={key} className={classes}
 					onClick={() => this.props.handleCellClicked(key)}>
-					<span>{ contents }</span>
+					<div className="cell-contents">{ contents }</div>
+					{speaker ?
+						<div className={speakerClasses}>{ speaker }</div> : null}
 				</td>);
 			}
 			rows.push(<tr key={row}>{ cells }</tr>);
@@ -176,6 +186,10 @@ function checkMinorDiagonalBingo(clickedCells: any, key: string): boolean {
 
 interface IBingoCardProps {
 	phrases: IPhrase[];
+	/**
+	 * Whether to split the speaker name and phrase
+	 */
+	contest: string | null;
 	onBack(): void;
 }
 

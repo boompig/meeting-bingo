@@ -184,8 +184,10 @@ const MeetingBingo : React.FC<IMeetingBingoProps> = ({view, phrases, isStockPhra
 	const u = new URL(window.location.href);
 
 	if(view === "/bingo-card") {
+		const contest = u.searchParams.get("contest");
 		return <BingoCard
 			phrases={ phrases }
+			contest={ contest }
 			onBack={handleShowPhrases} />;
 	} else if(view === "/") {
 		if (u.searchParams.get("contest") === "vp-debates-2020") {
