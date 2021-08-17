@@ -32,13 +32,13 @@ Start any HTTP server to serve the root directory (ex. `http-server .`) then nav
 
 ## Build
 
-during development:
+During development:
 
 ```
 yarn build:watch
 ```
 
-before deploying:
+Before deploying:
 
 ```
 yarn build:prod

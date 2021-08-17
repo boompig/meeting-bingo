@@ -26,7 +26,7 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "typescript": "^3.9.3",
-    "webpack": "^4.43.0",
+    "webpack": "4.x",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
