@@ -40,6 +40,7 @@ export const BingoApi = {
 		} else if(phraseFile && phraseFile.endsWith(".json")) {
 			url = `./data/${phraseFile}`;
 		}
+		console.log(`Fetching phrases using phrase file ${phraseFile}`);
 		const response = await getJSON(url);
 		console.log(response);
 		if(response.ok) {

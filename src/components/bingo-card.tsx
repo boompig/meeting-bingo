@@ -50,7 +50,8 @@ export class BingoGrid extends React.PureComponent<IBingoGridProps, {}> {
 				let speakerClasses = "cell-speaker";
 				if(speaker) {
 					// NOTE: have to be careful here about where the speaker comes from
-					speakerClasses += ` cell-speaker-${speaker.toLowerCase()}`;
+					const safeSpeaker = speaker.toLowerCase().replace("'", "");
+					speakerClasses += ` cell-speaker-${safeSpeaker}`;
 				}
 
 				cells.push(<td key={key} data-key={key} className={classes}

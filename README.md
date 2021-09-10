@@ -14,8 +14,8 @@ When you're in a meeting and a bit bored, amuse yourself by playing bingo. The g
 - `phrases` - can be used to directly encode phrases in base64. This is somewhat unsafe but allows sharing custom phrase sets between users
 - `editable` - can be set to "false" to prevent changing phrases
 - `phraseFile` - can specify the file to use, which are contained in `data` directory
-    - "debate2020" - `data/debate-phrases.json`
-    - if it ends with .json, search for that phrase file directly in `data` directory
+    - The parameter must end in `.json`. We look for that file in the `data` directory
+    - The *only* exception to this is "debate2020" - it maps to `data/debate-phrases.json`
 - `contest` - can specify this to get custom landing pages. Right now the only valid value is "vp-debates-2020"
 
 ## Stack

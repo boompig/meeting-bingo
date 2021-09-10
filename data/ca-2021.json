@@ -1,0 +1,110 @@
+{
+    "phrases": [
+
+        {
+            "phrase": "mentions Harper",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "doesn't answer the question",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "'failed policies'",
+            "speaker": "O'Toole"
+        },
+        {
+            "phrase": "two tier health-care system",
+            "speaker": "Trudeau"
+        },
+        {
+            "phrase": "denies climate change",
+            "speaker": "Bernier"
+        },
+        {
+            "phrase": "brags about vaccine roll-out",
+            "speaker": "Trudeau"
+        },
+        {
+            "phrase": "takes credit for Liberal policy",
+            "speaker": "Singh"
+        },
+        {
+            "phrase": "1%",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "better healthcare",
+            "speaker": "O'Toole"
+        },
+        {
+            "phrase": "someone calls someone else dishonest",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "'middle class'",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "mentions Trump",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "JT cosplaying",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "mentions Huawei",
+            "speaker": "O'Toole"
+        },
+        {
+            "phrase": "I am a feminist",
+            "speaker": "Trudeau"
+        },
+        {
+            "phrase": "Earthlings",
+            "speaker": "Trudeau"
+        },
+        {
+            "phrase": "oil is good",
+            "speaker": "O'Toole"
+        },
+        {
+            "phrase": "'let me be clear'",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "balanced budget",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "conservative cuts",
+            "speaker": "Trudeau"
+        },
+        {
+            "phrase": "election was unnecessary",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "'flip-flopping'",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "SNC Lavalin",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "'Canadians are struggling'",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "carbon tax",
+            "speaker": "Any"
+        },
+        {
+            "phrase": "3+ 'uhs' in a sentence",
+            "speaker": "Any"
+        }
+    ],
+    "hasSpeakers": true
+}
